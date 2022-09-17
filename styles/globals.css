@@ -10,6 +10,11 @@ a {
   color: inherit;
   text-decoration: none;
 }
+a:hover
+{
+  color: rgb(58, 149, 233) !important;
+  text-decoration: underline;
+}
 
 * {
   box-sizing: border-box;

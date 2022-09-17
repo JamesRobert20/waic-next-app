@@ -4,6 +4,8 @@ $full: 100%;
 
 $niceBlue: rgb(58, 149, 233);
 
+$niceYellow: rgb(212, 189, 147);
+
 @mixin flexDisplaying($direction: row, $justify: flex-start, $align: stretch)
 {
     display: flex;
