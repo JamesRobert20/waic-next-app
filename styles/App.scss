@@ -1,0 +1,40 @@
+@import 'main';
+@import 'Loader';
+@import 'SearchBar';
+@import 'Filtertags';
+@import 'Fileslist';
+@import 'FilePreviewContainer';
+@import 'CollectionViewer';
+@import 'LandingPage';
+@import 'HomePage';
+
+.loading-opacity
+{
+    opacity: 0.4;
+}
+#root-container
+{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    background-color: azure;
+}
+#fileSelectionGrids
+{
+    padding-top: 40px;
+    width: 1280px;
+    height: 565px;
+    @include flexDisplaying($justify: space-around);
+}
+.fileSelectionGrids-item
+{
+    
+    flex-basis: 48%;
+}
+.tag-names
+{
+    text-align: center;
+    color: $niceBlue;
+    font-size: medium;
+    font-weight: bold;
+    height: 20px;  
+}

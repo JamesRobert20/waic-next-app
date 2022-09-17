@@ -1,0 +1,57 @@
+@import 'main';
+
+#load-wrapper
+{
+    position: absolute;
+    @include flexDisplaying($justify: center, $align: center);
+    z-index: 999;
+}
+.large-loader
+{
+    width: $full;
+    top: 0;
+    left: 0;
+    height: 1250px;
+}
+.small-loader
+{
+    height: 500px;
+    width: 400px;
+}
+#the-loader
+{
+    @include flexDisplaying($justify: center);
+}
+.large-revolver
+{
+    margin-top: -350px;
+}
+.small-revolver::after
+{
+    width: 100px;
+    height: 100px;
+    border: 18px solid antiquewhite;
+    border-top-color: orange;
+    border-bottom-color: orange;
+}
+.large-revolver::after
+{
+    width: 400px;
+    height: 400px;
+    border: 40px solid antiquewhite;
+    border-top-color: $niceBlue;
+    border-bottom-color: $niceBlue;
+}
+#the-loader::after
+{
+    content: "";
+    border-radius: 50%;
+    animation: loading 2s linear infinite;
+}
+@keyframes loading
+{
+    to
+    {
+        transform: rotate(1turn);
+    }
+}

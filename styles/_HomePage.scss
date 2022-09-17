@@ -1,0 +1,47 @@
+@import 'main';
+#home-container
+{
+    min-height: fit-content;
+    height: 100%;
+    background-color: azure;
+}
+#top-navbar
+{
+    @include flexDisplaying($justify: space-between);
+    padding: 0 25px 0 0;
+    height: 70px; 
+    border-bottom: 1px solid lightgray;
+    background-color: grey;
+}
+.nav-ul
+{
+    @include flexDisplaying($align: center);
+    height: 95%;
+    margin: 0 !important;
+}
+/* hide bullets */
+li
+{
+    list-style: none;
+}
+#right-img-item
+{
+
+}
+.account-icon-div
+{
+    text-align: center;
+    background-color: white;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    margin: 8px 15px 5px 5px;
+}
+.account-icon-img
+{
+    opacity: 50%;
+    border-radius: 50%;
+    margin-top: 5px;
+    width: 60%;
+    height: 67%;
+} 

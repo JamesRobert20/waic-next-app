@@ -1,0 +1,22 @@
+@import 'main';
+
+.search-tags-container
+{
+    @include flexDisplaying($justify: space-around, $align: center);
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 402px;
+    height: 35px;
+}
+.search-tags
+{
+    text-align: center;
+    border: 2px solid $niceBlue;
+    border-radius: 10px;
+    background-color: white;
+    width: 150px;
+    height: 30px;
+    font-size: medium;
+    font-weight: bold;
+    color: green;
+}

@@ -1,0 +1,36 @@
+@import 'main';
+
+.search-bar
+{
+    @include flexDisplaying($align: center);
+    width: 350px;
+    height: 30px;
+    border-radius: 10px;
+    border: 2px solid $niceBlue;
+    background-color: white;
+}
+.search-bar:hover, .bar-focused
+{
+    border-color: brown;
+}
+.search-image
+{
+    opacity: 75%;
+    width: 24px;
+    height: 25px;
+    transform: rotate(7deg);
+    margin: 0px 5px 2px 4px;
+    width: 19px;
+    height: 16px;
+}
+.search-field
+{
+    border-radius: 0 8px 8px 0;
+    border-right: 1px solid white !important;
+    background-color: white !important;  
+    width: 318px;
+    border: none;
+    height: 93.5%;
+    /* hide border when search field is clicked */
+    outline: none;
+}
