@@ -3,11 +3,12 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.scss'
 import Link from 'next/link'
 import { useContext } from 'react'
+import UserAuthenticationContext from '../User/userAuthenticator'
 
 export default function Home() {
-    const user = useContext(UserAuthenticationContext);
+    const { user, login } = useContext(UserAuthenticationContext);
 
-    console.log("preventing prop drilling got: ", isLoggedIn);
+    console.log("preventing prop drilling got: ", user);
 
     return (
         <>
@@ -22,8 +23,7 @@ export default function Home() {
                     </Link>
                 </ul>
                 <ul className={styles.landingNavUl+" "+styles.rightUlItems}>
-                    <button className={styles.LogInBtn+" "+styles.GuestmodeBtn} onClick={() => { }}>LOG IN</button>
-                    <button className={styles.SignUpBtn+" "+styles.GuestmodeBtn} onClick={() => { }}>SIGN UP</button>
+                    <button className={styles.GuestmodeBtn} onClick={login}>Signup/Login</button>
                 </ul>
             </nav>
             <center>
