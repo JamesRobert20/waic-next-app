@@ -9,6 +9,7 @@ import PagePreviewGrid from '../components/PagePreviewGrid';
 import CollectionContainer from '../components/CollectionContainer';
 import AllPages from '../components/AllPages';
 import { useState, useCallback, useEffect, useRef } from 'react';
+import TopNavbar from '../components/TopNavbar';
 
 function FileAndCollectionViewer() {
     const [searchFieldContent, setSearchFieldContent] = useState("");
@@ -277,6 +278,7 @@ function FileAndCollectionViewer() {
         <>
             { isloading ? <Loader loadSize={"huge"} />: <></> }
             <div id="root-container" className={ isloading ? "pageContainer loading-opacity": "pageContainer"}>
+                <TopNavbar />
                 <center>
                     <div id="fileSelectionGrids">
                         <div id="allFilesGridView" className="fileSelectionGrids-item">

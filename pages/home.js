@@ -1,26 +1,11 @@
 import LibraryRow from "../components/LibraryRow"
 import Link from "next/link"
+import TopNavbar from "../components/TopNavbar"
 
 function HomePage() {
     return (
         <div id='home-container'>
-            <nav id='top-navbar'>
-                <ul id='left-nav-items' className='nav-ul'>
-                    <li>
-                        <Link href='/createCollection'><a style={{color: "white"}}> Create New Collection </a></Link>
-                    </li>
-                </ul>
-                <ul id='right-nav-items' className='nav-ul'>
-                    <li id='right-link-item'>
-                        <Link href='/'><a style={{color: "white"}}> My account </a></Link>
-                    </li>
-                    <li id='right-img-item'>
-                        <div className='account-icon-div'>
-                            <img src='images/account-img.png' className='account-icon-img' />
-                        </div>
-                    </li>
-                </ul>
-            </nav>
+            <TopNavbar />
             <center>
                 <div id="library-and-heading">
                     <h1 className="grey-heading">Welcome back, User</h1>
