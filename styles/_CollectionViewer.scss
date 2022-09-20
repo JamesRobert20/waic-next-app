@@ -93,6 +93,11 @@
     flex-direction: row-reverse;
     align-items: center;
 }
+#viewMode-label
+{
+    font-weight: 500;
+    font-size: large;
+}
 .undo-button, .back-button
 {
     @include flexDisplaying($justify: center, $align: center);
@@ -110,15 +115,19 @@
 {
     outline: none;
     cursor: pointer;
-    border: 1px solid rgb(58, 149, 233);
-    border-radius: 5px;
+    border: 1px solid $niceBlue;
+    border-radius: 6px;
     height: 74%;
-    color: green;
-    box-shadow: 1px 1px 2px rgb(58, 149, 233);
+    color: $niceBlue;
 }
 .collectionContainerBtns:active
 {
     transform: scale(0.99) !important;
+}
+.collectionContainerBtns:hover
+{
+    transform: scale(1.01);
+    box-shadow: 2px 2px 5px $niceBlue;
 }
 .decks-change-button
 {
@@ -335,11 +344,6 @@
 .collection-post-btns:active
 {
     transform: scale(0.99) !important;
-}
-.collectionContainerBtns:hover
-{
-    transform: scale(1.01);
-    box-shadow: 3px 3px 5px $niceYellow;
 }
 .wholeSlideContainer, .wholeSlideContainer-1, .wholeSlideContainer-2, .wholeSlideContainer-3
 {

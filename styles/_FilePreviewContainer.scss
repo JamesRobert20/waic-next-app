@@ -78,11 +78,11 @@
 .insertPagesButtons
 {
     cursor: pointer;
-    border: 3px solid orange;
+    border: 3px solid $niceBlue;
     background-color: white;
-    color: orange;
+    color: $niceBlue;
     font-weight: bold;
-    border-radius: 10px;
+    border-radius: 12px;
     width: 100%;
 }
 .insertPagesButtons:active
