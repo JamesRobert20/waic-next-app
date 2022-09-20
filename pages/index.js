@@ -13,7 +13,7 @@ export default function Home() {
 
     if(user)
         return (
-            <div>
+            <div className={styles.homeContainer}>
                 <TopNavbar />
                 <center>
                     <div className={styles.libraryAndHeading}>
