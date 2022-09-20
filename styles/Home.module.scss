@@ -146,13 +146,13 @@
     min-width: 870px;
     background-color: azure;
 }
-.greyHeading
+.homeHeadings
 {
+    text-align: left;
     color: grey !important;
 }
 .libraryAndHeading
 {
-    @include flexDisplaying($direction: column, $align: flex-start);
     width: 85%;
 }
 .libraryContainer

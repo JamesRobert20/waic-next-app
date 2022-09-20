@@ -17,7 +17,7 @@ export default function Home() {
                 <TopNavbar />
                 <center>
                     <div className={styles.libraryAndHeading}>
-                        <h1 className={styles.greyHeading}>{"Welcome back, "+user.user_metadata.full_name.split(' ')[0]}</h1>
+                        <h1 className={styles.homeHeadings}>{"Welcome back, "+user.user_metadata.full_name.split(' ')[0]}</h1>
                         <div className={styles.libraryContainer}>
                             {["Suggested","Your Collections","Your files"].map((elem, index) => (
                                 <LibraryRow styles={styles} key={index} item={elem} />

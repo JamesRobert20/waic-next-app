@@ -21,17 +21,25 @@ function LibraryRow({ item, styles }) {
         const debouncedHandleResize = debounce( () => {
             //console.log("new dimensions are ", window.innerWidth, " x ", window.innerHeight);
             //console.log("There should be ", Math.floor((window.innerWidth+40)/300), " folders");
+            /* let arr = [];
+            arr.push("Division " + Math.floor((window.innerWidth+40)/300));
+            arr.push("actual width " + window.innerWidth);
+            arr.push("done testing");
+
+            setFlexibleCollectionList(arr); */
             setFlexibleCollectionList(
                 yourCollections.filter( (item, index) => index < Math.floor((window.innerWidth+40)/300) || (index < 3 && window.innerWidth < 870) )
-            );
-          
+            ); 
+            
         }, 1000)
         
         if(flexibleCollectionList.length === 0)
         {
             //console.log("first render", window && window.innerWidth);
             //console.log(yourCollections.filter((item, index) => index < Math.floor((window.innerWidth+40)/300)));
-            setFlexibleCollectionList(yourCollections.filter((item, index) => index < Math.floor((window.innerWidth+40)/300)));
+            setFlexibleCollectionList(
+                yourCollections.filter( (item, index) => index < Math.floor((window.innerWidth+40)/300) || (index < 3 && window.innerWidth < 870) )
+            ); 
         }
 
         window && window.addEventListener('resize', debouncedHandleResize)
@@ -43,7 +51,7 @@ function LibraryRow({ item, styles }) {
 
     return (
         <div className={styles.libraryRowContainer}>
-            <h2 className={styles.greyHeading}>{item}</h2>
+            <h2 className={styles.homeHeadings}>{item}</h2>
             <div className={item === "Your Collections" ? styles.libraryRow+" "+styles.hiddenOverflow : styles.libraryRow}>
                 { item === "Suggested" ? 
                     ["percyjack.pdf", "WAIC.pdf", "potter.pdf"].map( (file, index) => (
