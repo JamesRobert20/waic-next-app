@@ -9,9 +9,6 @@ function TopNavbar() {
     const { user, login, logout } = useContext(UserAuthenticationContext);
     const router = useRouter();
 
-    console.log(router.pathname !== "/CreateCollection");
-    console.log(router.pathname);
-
     if(user)
         return (
             <>
@@ -47,7 +44,7 @@ function TopNavbar() {
   return (
     <nav className={navstyles.landingNavbar}>
         <ul className={navstyles.landingNavUl}>
-            {router.pathname !== "/CreateCollection" ?
+            {router.pathname.slice(1).toLowerCase() !== "createcollection" ?
                 <Link href="/CreateCollection">
                     <a style={{fontSize: "x-large"}}>Try out Guest mode</a>
                 </Link>
