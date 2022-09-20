@@ -1,12 +1,10 @@
 @import 'main';
 
 .landingNavbar {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 100px 0 10px;
-    height: 80px;
+    @include flexDisplaying($direction: row-reverse);
+    padding-right: 50px;
+    height: 70px;
     border-bottom: 1px solid lightgray;
-    background-color: grey;
 }
 
 .landingNavUl {

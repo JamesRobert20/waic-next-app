@@ -46,12 +46,10 @@ function TopNavbar() {
         <ul className={navstyles.landingNavUl}>
             {router.pathname.slice(1).toLowerCase() !== "createcollection" ?
                 <Link href="/CreateCollection">
-                    <a style={{fontSize: "x-large"}}>Try out Guest mode</a>
+                    <a style={{fontSize: "large"}}>Try out Guest mode</a>
                 </Link>
                 : <></>
             }
-        </ul>
-        <ul className={navstyles.landingNavUl}>
             <button className={navstyles.signInOrOutBtn} onClick={login}>Signup/Login</button>
         </ul>
     </nav>
