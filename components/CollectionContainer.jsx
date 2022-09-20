@@ -205,8 +205,8 @@ function CollectionContainer({ pagesSelected, removePage, resetPagesSelected, up
                     }
                 </div>
                 <div>
-                    <button id="save-collection" className="collection-post-btns">Save Collection</button>
-                    <button onClick={() => downloadCollection()} id="download-collection" className="collection-post-btns">Download Collection</button>
+                    <button onClick={() => downloadCollection()} id="download-collection" className="collection-post-btns">Download</button>
+                    <button id="save-collection" className="collection-post-btns">Save</button>
                 </div> 
             </div>
             <div style={{display: "none"}}>
