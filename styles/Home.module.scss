@@ -137,48 +137,6 @@
     height: 100%;
     background-color: azure;
 }
-
-.landingNavbar {
-    @include flexDisplaying($justify: space-between);
-    padding: 10px 100px 0 10px;
-    height: 80px;
-    border-bottom: 1px solid lightgray;
-    background-color: grey;
-}
-
-.landingNavUl {
-    @include flexDisplaying($align: center);
-    height: 95%;
-    margin: 0 !important;
-}
-
-.GuestmodeBtn {
-    background-color: azure;
-    border-width: 1px;
-    border-radius: 3px;
-    cursor: pointer;
-    margin: 20px;
-    font-size: large;
-    height: 50%;
-}
-
-.GuestmodeBtn:active {
-    transform: scale(0.985);
-}
-
-.GuestmodeBtn:hover {
-    box-shadow: 2px 2px 5px 1px $niceBlue;
-}
-
-.LogInBtn {
-    width: 120px;
-}
-
-.SignUpBtn {
-    width: 120px;
-    background-color: rgb(190, 163, 224);
-}
-
 .landingHeading {
     font-size: 3em !important;
 }

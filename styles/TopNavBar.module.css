@@ -1,0 +1,35 @@
+
+.landingNavbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 100px 0 10px;
+    height: 80px;
+    border-bottom: 1px solid lightgray;
+    background-color: grey;
+}
+
+.landingNavUl {
+    display: flex;
+    align-items: center;
+    height: 95%;
+    margin: 0 !important;
+}
+
+.signInOrOutBtn {
+    cursor: pointer;
+    font-size: large;
+    background: azure;
+    border: 2px solid rgb(212, 189, 147);
+    border-radius: 20px;
+    height: 40px;
+}
+.signInOrOutBtn:active {
+    transform: scale(0.985);
+}
+
+.signInOrOutBtn:hover {
+    box-shadow: 2px 2px 5px 1px rgb(58, 149, 233);
+}
+.LogInBtn {
+    width: 120px;
+}

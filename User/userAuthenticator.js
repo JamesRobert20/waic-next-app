@@ -18,18 +18,32 @@ export const AuthenticationProvider = ({ children }) => {
         netlifyIdentity.on('login', (user) => {
             setUser(user)
             netlifyIdentity.close()
-            console.log(user, 'logged in')
+            console.log(user.email, 'logged in')
+        })
+
+        netlifyIdentity.on('logout', () => {
+            setUser(null)
+            console.log('logged out')
         })
 
         // Initialize netlify identity connection
         netlifyIdentity.init();
+        
+        return () => {
+            netlifyIdentity.off('login')
+            netlifyIdentity.off('logout')
+        }
     },[]);
 
     const login = () => {
         netlifyIdentity.open()
     };
 
-    const userAuth = { user, login };
+    const logout = () => {
+        netlifyIdentity.logout()
+    };
+
+    const userAuth = { user, login, logout };
     return (
         <UserAuthenticationContext.Provider value={userAuth}>
             {children}
