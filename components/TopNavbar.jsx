@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Link from "next/link"
+import navStyles from '../styles/Navbar.module.scss'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
 import UserAuthenticationContext from '../User/userAuthenticator'
