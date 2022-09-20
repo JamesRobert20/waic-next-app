@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useContext } from 'react'
+import FilesContext from '../contexts/filesContext'
 
-function DestinationPrompts({ renewList, oldList, updateState }) {
+function DestinationPrompts() {
+    const { renewFileslist: renewList, fileslist: oldList, changeFileUploadState: updateState } = useContext(FilesContext);
 
     const printStuff = stuff => {
         let filesList = Object.keys(stuff).filter(file => stuff[file].name.toLowerCase().includes(".pdf") || stuff[file].name.toLowerCase().includes(".mp4") || stuff[file].name.toLowerCase().includes(".jpg") || stuff[file].name.toLowerCase().includes(".png"))

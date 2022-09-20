@@ -134,7 +134,7 @@ function CollectionContainer({ pagesSelected, removePage, resetPagesSelected, up
                                     id="add-to-workspace" className="collectionContainerBtns decks-change-button"
                                     onClick={() => updateCollectionFiles()}
                                 >
-                                    Add to workspace
+                                    Save file
                                 </button>
                                 <div title="Back to Full List" onClick={() => viewCollectionFiles()}
                                     className={collectionFiles.length > 0 ? 
@@ -162,7 +162,7 @@ function CollectionContainer({ pagesSelected, removePage, resetPagesSelected, up
                                     id="create-new-workspace" onClick={() => createNewCollectionFile()}
                                     className="collectionContainerBtns decks-change-button"
                                 >
-                                    Create new workspace
+                                    Create new file
                                 </button>
                                 <select 
                                     id="select-number-of-decks" className="collectionContainerBtns"

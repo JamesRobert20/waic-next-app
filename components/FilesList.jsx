@@ -1,20 +1,23 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useContext } from 'react';
 import CoverPages from './CoverPages';
 import Files from './Files';
+import FilesContext from '../contexts/filesContext'
 
-function FilesList(props) {
-    const coverArray = useRef(props.fileslist.map(() => (false)));
+function FilesList() {
+    const { fileslist, coversDoneLoading, coversLoaded } = useContext(FilesContext);
+
+    const coverArray = useRef(fileslist.map(() => (false)));
     const images = useRef({});
 
     useEffect(() => {
-        //console.log("is it here?", props.fileslist);
+        //console.log("is it here?", fileslist);
         //console.log();
-        coverArray.current = props.fileslist.map(() => (false));
+        coverArray.current = fileslist.map(() => (false));
         images.current = {};
-    }, [props.fileslist])
+    }, [fileslist])
     //useEffect( () => { /* console.log("hooray ") */ } , [coversLoaded]);
 
-    //console.log(props.fileslist);
+    //console.log(fileslist);
 
     const coverPageDone = (index, filename, data, numPages) => {
         //console.log(filename);
@@ -32,17 +35,14 @@ function FilesList(props) {
         //console.log("ebu tuone ", coverArray.current);
         if(!newArray.includes(false))
         {
-            props.coversDoneLoading(images.current);
+            coversDoneLoading(images.current);
         }
     };
 
     return (
         <>
-            { !props.coversLoaded ? (<CoverPages fileslist={props.fileslist} coverPageDone={coverPageDone} />): <></>}
-            <Files 
-                fileSelected={props.fileSelected} files={props.fileslist} fileData={props.fileData} 
-                updateFileSelected={props.updateFileSelected} coversLoaded={props.coversLoaded}
-            />
+            { !coversLoaded ? (<CoverPages fileslist={fileslist} coverPageDone={coverPageDone} />): <></>}
+            <Files />
         </>
     )
 }

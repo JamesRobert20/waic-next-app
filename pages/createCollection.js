@@ -8,26 +8,32 @@ import FilePreviewGrid from '../components/FilePreviewGrid';
 import PagePreviewGrid from '../components/PagePreviewGrid';
 import CollectionContainer from '../components/CollectionContainer';
 import AllPages from '../components/AllPages';
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useCallback, useEffect, useRef, createContext } from 'react';
 import TopNavbar from '../components/TopNavbar';
+import { FileContextProvider } from '../contexts/filesContext'
 
 function FileAndCollectionViewer() {
     const [searchFieldContent, setSearchFieldContent] = useState("");
+    const [fileTypeTagValue, setFileTypeTagValue] = useState("File Type");
+    const [lastModValue, setLastModValue] = useState("File Type");
+
+    const [fileslist, setFileslist] = useState([]);
+    const [changingfilelist, setChangingfilelist] = useState(fileslist);
+    const [fileData, setFileData] = useState({});
     const [fileSelected, setFileSelected] = useState(null);
     const [range, setRange] = useState({ min: "", max: ""});
     const [viewmode, setViewmode] = useState("List view:");
-    const [fileTypeTagValue, setFileTypeTagValue] = useState("File Type");
-    const [lastModValue, setLastModValue] = useState("File Type");
-    const [fileslist, setFileslist] = useState([]);
-    const [changingfilelist, setChangingfilelist] = useState(fileslist);
+    
     const [coversLoaded, setCoversLoaded] = useState(false);
     const [isloading, setIsloading] = useState(false);
-    const [fileData, setFileData] = useState({});
     const [pagesLoading, setPagesLoading] = useState(false);
+    const [filesUploading, setFilesUploading] = useState(true);
+
     const [pagesChosen, setPagesChosen] = useState([]);
     const [pagesSelected, setPagesSelected] = useState([]);
+
     const [insertToCollectionBtn, setInsertToCollectionBtn] = useState({ number: 1, mainState: "Add to Deck" });
-    const [filesUploading, setFilesUploading] = useState(true);
+    
 
     let pagesData = useRef([]), 
         pageKeys = useRef([]), 
@@ -290,12 +296,12 @@ function FileAndCollectionViewer() {
                                 filterTagsClass={"search-tags-container"}
                                 updateFileTypeFilter={updateFileTypeFilter} updateLastModFilter={updateLastModFilter}  
                             />
-                            <FilesListGridContents
-                                fileData={fileData} coversLoaded={coversLoaded} renewFileslist={renewFileslist} 
-                                coversDoneLoading={coversDoneLoading} fileslist={changingfilelist} filesUploading={filesUploading}
-                                doneLoading={doneLoading} originalList={fileslist} changeFileUploadState={changeFileUploadState}
-                                startLoading={startLoading} fileSelected={fileSelected} updateFileSelected={updateFileSelected}
-                            />      
+                            <FileContextProvider value={{ 
+                                fileData, coversLoaded, renewFileslist, coversDoneLoading, fileslist: changingfilelist, 
+                                originalList: fileslist, changeFileUploadState, fileSelected, updateFileSelected 
+                            }}>
+                                <FilesListGridContents filesUploading={filesUploading} changeFileUploadState={changeFileUploadState} />  
+                            </FileContextProvider>    
                         </div>
                         <div id="filePreviewContainer" className="fileSelectionGrids-item">
                             { pagesLoading && fileSelected ? 

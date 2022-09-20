@@ -1,5 +1,9 @@
+import { useContext } from 'react';
+import FilesContext from '../contexts/filesContext'
 
-function Files({ files, coversLoaded, fileData, fileSelected, updateFileSelected }) {
+function Files() {
+    const { fileslist: files, coversLoaded, fileData, fileSelected, updateFileSelected } = useContext(FilesContext);
+
     //console.log(fileData);
 
     const getFileName = filename => {
