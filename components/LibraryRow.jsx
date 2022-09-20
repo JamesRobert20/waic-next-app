@@ -2,7 +2,7 @@ import CollectionFolder from "./CollectionFolder"
 import FileObjectViewer from "./FileObjectViewer"
 import { useState, useEffect } from 'react'
 
-function LibraryRow({ item }) {
+function LibraryRow({ item, styles }) {
     const yourCollections = ["Geology", "Sex Education", "Calculus", "English", "Law and Pursuit"];
     const [flexibleCollectionList, setFlexibleCollectionList] = useState([]);
 
@@ -42,19 +42,19 @@ function LibraryRow({ item }) {
     })
 
     return (
-        <div className="library-row-container">
-            <h2 className="grey-heading">{item}</h2>
-            <div className={item === "Your Collections" ? "library-row hidden-overflow" : "library-row"}>
+        <div className={styles.libraryRowContainer}>
+            <h2 className={styles.greyHeading}>{item}</h2>
+            <div className={item === "Your Collections" ? styles.libraryRow+" "+styles.hiddenOverflow : styles.libraryRow}>
                 { item === "Suggested" ? 
                     ["percyjack.pdf", "WAIC.pdf", "potter.pdf"].map( (file, index) => (
-                        <FileObjectViewer file={file} key={index} />
+                        <FileObjectViewer styles={styles} file={file} key={index} />
                     ))
                     : item === "Your Collections" ?
                     flexibleCollectionList.map( (folder, index) => (
-                        <CollectionFolder folderName={folder} key={index} />
+                        <CollectionFolder styles={styles} folderName={folder} key={index} />
                     ))
                     : ["fake slides.pdf", "tucomanca.pdf", "Tutorial10.pdf"].map( (file, index) => (
-                        <FileObjectViewer file={file} key={index} />
+                        <FileObjectViewer styles={styles} file={file} key={index} />
                     ))
                 }
             </div>

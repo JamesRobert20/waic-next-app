@@ -21,6 +21,11 @@ a:hover {
 * {
     box-sizing: border-box;
 }
+/* hide bullets */
+li
+{
+    list-style: none;
+}
 
 @media (prefers-color-scheme: dark) {
     html {

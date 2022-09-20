@@ -13,14 +13,14 @@ export default function Home() {
 
     if(user)
         return (
-            <div id='home-container'>
+            <div>
                 <TopNavbar />
                 <center>
-                    <div id="library-and-heading">
-                        <h1 className="grey-heading">Welcome back, User</h1>
-                        <div id="library-container">
+                    <div className={styles.libraryAndHeading}>
+                        <h1 className={styles.greyHeading}>Welcome back, User</h1>
+                        <div className={styles.libraryContainer}>
                             {["Suggested","Your Collections","Your files"].map((elem, index) => (
-                                <LibraryRow key={index} item={elem} />
+                                <LibraryRow styles={styles} key={index} item={elem} />
                             ))}
                         </div>
                     </div>

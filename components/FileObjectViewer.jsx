@@ -1,9 +1,9 @@
-function FileObjectViewer({ file }) {
+function FileObjectViewer({ file, styles }) {
     
     return (
-        <div className="file-container">
-            <object data={'files/'+file} type="application/pdf" className="file-element"></object>
-            <div className="file-name">{file}</div>
+        <div className={styles.fileContainer}>
+            <iframe src={'files/'+file} className={styles.fileElement}></iframe>
+            <div className={styles.fileName}>{file}</div>
         </div>
     )
 }

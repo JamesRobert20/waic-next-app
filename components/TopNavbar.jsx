@@ -15,26 +15,26 @@ function TopNavbar() {
             <Head>
                 <title>Content Manager</title>
             </Head>
-            <nav id='top-navbar'>
-                <ul className='left-nav-ul nav-ul'>
-                    <li className="left-link-item">
+            <nav className={navstyles.topNavbar}>
+                <ul className={navstyles.leftNavUl+" "+navstyles.navUl}>
+                    <li className={navstyles.leftLinkItem}>
                         <Link href="/"><a>Home</a></Link>
                     </li>
-                    <li className="left-link-item">
+                    <li className={navstyles.leftLinkItem}>
                         <Link href='/CreateCollection'><a> Create New Collection </a></Link>
                     </li>
                 </ul>
-                <ul className='nav-ul'>
+                <ul className={navstyles.rightNavUl+" "+navstyles.navUl}>
                     <li>
                         <Link href='/'><a> My account </a></Link>
                     </li>
                     <li>
-                        <div className='account-icon-div'>
-                            <img src='images/account-img.png' className='account-icon-img' />
+                        <div className={navstyles.accountIconDiv}>
+                            <img src='images/account-img.png' className={navstyles.accountIconImg} />
                         </div>
                     </li>
                     <li>
-                        <button onClick={logout} className={navstyles.signInOrOutBtn}>Log Out</button>
+                        <button onClick={logout} className={navstyles.signInOrOutBtn}>Log out</button>
                     </li>
                 </ul>
             </nav>

@@ -1,13 +1,13 @@
 @import 'main';
 
 .landingNavbar {
-    @include flexDisplaying($direction: row-reverse);
     padding-right: 50px;
     height: 70px;
     border-bottom: 1px solid lightgray;
 }
 
 .landingNavUl {
+    float: right;
     display: flex;
     align-items: center;
     height: 95%;
@@ -20,7 +20,8 @@
     border: 2px solid $niceBlue;
     color: $niceBlue !important;
     border-radius: 20px;
-    height: 45px;
+    height: 43px;
+    margin-left: 20px;
 }
 .signInOrOutBtn:active {
     transform: scale(0.985);
@@ -32,3 +33,46 @@
 .LogInBtn {
     width: 120px;
 }
+.topNavbar
+{
+    padding: 0 50px 0 50px;
+    height: 70px; 
+    border-bottom: 1px solid lightgray;
+}
+.leftNavUl
+{
+    float: left;
+}
+.rightNavUl
+{
+    float: right;
+}
+.navUl
+{
+    @include flexDisplaying($align: center, $justify: space-around);
+    height: 95%;
+    margin: 0 !important;
+}
+.leftLinkItem
+{
+    margin-right: 30px;
+}
+.accountIconDiv
+{
+    border: 2px solid $niceBlue;
+    text-align: center;
+    background-color: white;
+    border-radius: 50%;
+    width: 43px;
+    height: 43px;
+    margin: 8px 5px 5px 5px;
+}
+.accountIconImg
+{
+    opacity: 50%;
+    border-radius: 50%;
+    margin-top: 5px;
+    width: 60%;
+    height: 67%;
+} 
+
