@@ -23,12 +23,12 @@ export const AuthenticationProvider = ({ children }) => {
 
         netlifyIdentity.on('logout', () => {
             setUser(null)
-            console.log('logged out')
+            console.log('Logged out')
         })
 
         // Initialize netlify identity connection
         netlifyIdentity.init();
-        
+
         return () => {
             netlifyIdentity.off('login')
             netlifyIdentity.off('logout')
