@@ -18,7 +18,7 @@ export const AuthenticationProvider = ({ children }) => {
         netlifyIdentity.on('login', (user) => {
             setUser(user)
             netlifyIdentity.close()
-            console.log(user.email, 'logged in')
+            console.log(user.email, 'Logged in')
         })
 
         netlifyIdentity.on('logout', () => {
