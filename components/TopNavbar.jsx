@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Link from "next/link"
 import { useRouter } from 'next/router'
-import styles from '../styles/TopNavbar.module.css'
+import navstyles from '../styles/TopNavbar.module.css'
 import { useContext } from 'react'
 import UserAuthenticationContext from '../User/userAuthenticator'
 
@@ -34,7 +34,7 @@ function TopNavbar() {
                         </div>
                     </li>
                     <li>
-                        <button onClick={logout} className={styles.signInOrOutBtn}>Log Out</button>
+                        <button onClick={logout} className={navstyles.signInOrOutBtn}>Log Out</button>
                     </li>
                 </ul>
             </nav>
@@ -42,8 +42,8 @@ function TopNavbar() {
         )
 
   return (
-    <nav className={styles.landingNavbar}>
-        <ul className={styles.landingNavUl}>
+    <nav className={navstyles.landingNavbar}>
+        <ul className={navstyles.landingNavUl}>
             {router.pathname !== "/CreateCollection" ?
                 <Link href="/CreateCollection">
                     <a style={{fontSize: "x-large"}}>Try out Guest mode</a>
@@ -51,8 +51,8 @@ function TopNavbar() {
                 : <></>
             }
         </ul>
-        <ul className={styles.landingNavUl}>
-            <button className={styles.signInOrOutBtn} onClick={login}>Signup/Login</button>
+        <ul className={navstyles.landingNavUl}>
+            <button className={navstyles.signInOrOutBtn} onClick={login}>Signup/Login</button>
         </ul>
     </nav>
   )
