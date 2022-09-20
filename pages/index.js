@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.scss'
 import LibraryRow from "../components/LibraryRow"
-import TopNavbar from "../components/TopNavbar"
+
 import { useContext } from 'react'
 import UserAuthenticationContext from '../User/userAuthenticator'
 
@@ -14,7 +14,7 @@ export default function Home() {
     if(user)
         return (
             <div id='home-container'>
-                <TopNavbar />
+                
                 <center>
                     <div id="library-and-heading">
                         <h1 className="grey-heading">Welcome back, User</h1>
@@ -31,7 +31,7 @@ export default function Home() {
     return (
         <>
         <div className={styles.landingContainer}>
-            <TopNavbar />
+            
             <center>
                 <h1 className={styles.landingHeading}>Your very own library</h1>
                 <p style={{ fontSize: "xx-large", fontWeight: "bold", color: "rgb(212, 189, 147)" }}>
