@@ -9,6 +9,9 @@ function TopNavbar() {
     const { user, login, logout } = useContext(UserAuthenticationContext);
     const router = useRouter();
 
+    console.log(router.pathname !== "/CreateCollection");
+    console.log(router.pathname);
+
     if(user)
         return (
             <>
