@@ -1,7 +1,15 @@
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import PreviewContext from '../contexts/previewNavbarContexts'
 
-function AlternatingCheckbox({ viewmode, checkboxname, pagesChosen }) {
-    const [checked, setChecked] = useState(checkboxname === viewmode.mode);
+function AlternatingCheckbox({ checkboxname }) {
+    const { viewmode, pagesChosen } = useContext(PreviewContext);
+    const [checked, setChecked] = useState(checkboxname === "Select All:" ? 
+        false : checkboxname === viewmode.mode
+    );
+
+    useEffect(() => {
+        setChecked(!pagesChosen.array.includes(false));
+    },[pagesChosen.array]);
 
     const handleSelectAll = (selectChecked) => {
         setChecked(selectChecked)
@@ -11,7 +19,7 @@ function AlternatingCheckbox({ viewmode, checkboxname, pagesChosen }) {
     if(checkboxname === "Select All:")
         return ( <input 
                     id={checkboxname} className="preview-nav-checkbox" 
-                    type="checkbox" checked={checked || !pagesChosen.array.includes(false)} 
+                    type="checkbox" checked={checked} 
                     onChange={(e) => handleSelectAll(e.target.checked)} 
                 />)
   

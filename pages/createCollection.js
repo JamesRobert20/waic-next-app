@@ -11,6 +11,7 @@ import AllPages from '../components/AllPages';
 import { useState, useCallback, useEffect, useRef, createContext } from 'react';
 import TopNavbar from '../components/TopNavbar';
 import { FileContextProvider } from '../contexts/filesContext'
+import { PreviewNavbarContextProvider } from '../contexts/previewNavbarContexts'
 
 function FileAndCollectionViewer() {
     const [searchFieldContent, setSearchFieldContent] = useState("");
@@ -321,11 +322,12 @@ function FileAndCollectionViewer() {
                                 :(<></>) 
                             }
                             { fileSelected && !filesUploading ?  
-                                <PreviewNavbar 
-                                    pagesChosen={ { array: pagesChosen, change: controlAllPages } }
-                                    viewmode={{ mode: viewmode, update: (mode) => updateViewmode(mode) }} range={range} 
-                                    updateRange={updateRange} handleRangeSubmit={handleRangeSubmit} 
-                                /> : 
+                                <PreviewNavbarContextProvider value={{ 
+                                    viewmode: {mode: viewmode, update: (mode) => updateViewmode(mode)},  range,
+                                    pagesChosen: {array: pagesChosen, change: controlAllPages}, updateRange
+                                }}>
+                                    <PreviewNavbar handleRangeSubmit={handleRangeSubmit} />
+                                </PreviewNavbarContextProvider> : 
                                 (<></>)
                             }
                             { pagesLoading && fileSelected ? 

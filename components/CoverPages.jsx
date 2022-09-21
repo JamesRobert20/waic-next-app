@@ -1,19 +1,10 @@
 import PdfViewer from './PdfViewer'
 import Video from './Video'
-import Image from './Image'
+import Image from 'next/image'
 import { useRef, useEffect, useState } from 'react';
 
 function CoverPages({ fileslist, coverPageDone }) {
-    const [files, setFiles] = useState(fileslist);
     let viewerKeys = useRef([]);
-
-    useEffect(() => {
-        //console.log("changed into", files);
-        setFiles(fileslist);
-    }, [fileslist]);
-
-    //console.log("rendering...");
-    
     
     const getKey = () => {
         let item;
@@ -28,17 +19,15 @@ function CoverPages({ fileslist, coverPageDone }) {
 
     return (
         <div id="cover-pages" style={{ display: "none"}}>
-            { files.map( (file,index) => ( 
+            { fileslist.map( (file,index) => ( 
                 file.filename.split('.')[file.filename.split('.').length - 1] === "pdf" ?
                     (<PdfViewer index={index} viewState={"cover-page"} key={getKey()} 
-                                url={file.url}
-                                filename={file.filename}
-                                coverPageDone={coverPageDone}
+                        url={file.url} filename={file.filename} coverPageDone={coverPageDone}
                     /> 
                     ):
                     (file.filename.split('.')[file.filename.split('.').length - 1] === "mp4"? 
                         <Video  mode={"initial"} index={index} key={getKey()} filename={file.filename} url={file.url} coverPageDone={coverPageDone} />: 
-                        <Image mode={"initial"} index={index} key={getKey()} filename={file.filename} url={file.url} coverPageDone={coverPageDone} />
+                        <Image width={400} height={400} key={getKey()} alt={file.filename} src={file.url} onLoad={() => coverPageDone(index, file.filename, file.url, null)} />
                     )
                 ))
             }

@@ -1,7 +1,5 @@
-import { useRef } from "react";
 
 function Video({ index, url, filename, coverPageDone, mode }) {
-    const videoRef = useRef(); 
 
     const obtainData = () => {
         if (mode === "initial")
@@ -20,7 +18,7 @@ function Video({ index, url, filename, coverPageDone, mode }) {
     }; 
 
     return (
-        <video ref={videoRef} onCanPlayThrough={obtainData} controls>
+        <video onCanPlayThrough={obtainData} controls>
             Your browser does not support video preview!
             <source src={url} type="video/mp4"/>
         </video>

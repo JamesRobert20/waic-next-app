@@ -1,10 +1,21 @@
-import { useContext } from 'react';
+import { useContext, useRef } from 'react';
 import FilesContext from '../contexts/filesContext'
 
 function Files() {
     const { fileslist: files, coversLoaded, fileData, fileSelected, updateFileSelected } = useContext(FilesContext);
 
-    //console.log(fileData);
+    let viewerKeys = useRef([]);
+    
+    const getKey = () => {
+        let item;
+        do
+        {
+            item = Math.floor(Math.random() * 10000);
+        }
+        while (viewerKeys.current.includes(item))
+        viewerKeys.current = [...viewerKeys.current, item];
+        return item;
+    };
 
     const getFileName = filename => {
         var Splitted = filename.split('.');
@@ -19,7 +30,7 @@ function Files() {
     };
 
     return files.map((file, index) => (
-        <div key={coversLoaded ? fileData[file.filename].index : index} onClick={ () => fileClick(file.filename) } 
+        <div key={getKey()} onClick={ () => fileClick(file.filename) } 
             className={ "search-result " + (fileSelected === file.filename ? "fileSelected" : "") } >
             { coversLoaded ? 
                 file.filename.split('.')[file.filename.split('.').length - 1] === "mp4" ?

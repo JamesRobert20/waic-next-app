@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import PreviewContext from '../contexts/previewNavbarContexts'
 
-function RangeInput({ range, updateRange }) {
+function RangeInput() {
+    const { range, updateRange } = useContext(PreviewContext);
     const [minvalue, setMinvalue] = useState("");
     
     const handleChange = (e, item) => {

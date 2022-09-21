@@ -1,14 +1,11 @@
 import AlternatingCheckbox from './AlternatingCheckbox';
 
-function Checkboxgroup({ viewmode, pagesChosen }) {
+function Checkboxgroup() {
 
     return ["Select All:", "List view:", "Gallery view:"].map((item, index) => (
         <div key={index} style={{ display: "flex" }}>
             <label htmlFor={item} className='preview-nav-labels preview-navcheckbox-labels'>{item}</label>
-            <AlternatingCheckbox
-                viewmode={viewmode}
-                checkboxname={item} pagesChosen={pagesChosen}
-            />
+            <AlternatingCheckbox checkboxname={item} />
         </div>
     ));
 }
