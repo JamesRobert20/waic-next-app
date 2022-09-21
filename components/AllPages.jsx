@@ -2,7 +2,6 @@ import { useRef } from "react";
 import PdfViewer from "./PdfViewer"
 
 function AllPages({ pagesData, fileData, filename, updateFileData }) {
-    
     let morePages = useRef(pagesData.map( () => ("") ));
     let pagesStatus = useRef(pagesData.map( () => (false) )); 
 
@@ -22,7 +21,7 @@ function AllPages({ pagesData, fileData, filename, updateFileData }) {
     <div className="pages" style={{display: "none"}}>
         {pagesData.map( (pageNum) => (
             (<PdfViewer index={pageNum} viewState={"pages"} key={pageNum} 
-                url={"http://localhost:3000//files/" + filename}
+                url={fileData[filename].fileUrl}
                 filename={filename}
                 pageDone={pageDone}
             />) 

@@ -28,7 +28,7 @@ function FilesList() {
         coverArray.current = newArray;
 
         let newObj = {...images.current};
-        newObj[filename] = { totalPages: numPages, pages: [data], index: Math.floor(Math.random() * 10000) };
+        newObj[filename] = { totalPages: numPages, pages: [data], index: index, fileUrl: fileslist[index].url };
         images.current = newObj;
         //console.log("after", coverArray.current);
         
