@@ -3,17 +3,6 @@
 {
     opacity: 40%;
 }
-.fileOnDisplay
-{
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    justify-items: center;
-    overflow-y: auto;
-}
-.videoOnDisplay, .imageOnDisplay
-{
-    @include flexDisplaying($direction: column, $align: center);
-}
 #filePreviewContainer
 {
     @include flexDisplaying($direction: column, $align: center);
@@ -22,7 +11,25 @@
     border: 5px solid $niceYellow;
     border-radius: 15px;
 }
-#filePreviewGrid
+.mediaOnDisplay
+{
+    @include flexDisplaying($direction: column, $align: center);
+}
+.video-file
+{
+    width: 450px;
+    height: 450px;
+}
+.image-file
+{
+    margin-top: 20px;
+    transition: transform .3s linear;
+}
+.image-file:hover
+{
+    transform: scale(1.2);
+}
+.fileOnDisplay
 {
     display: grid;
     grid-template-columns: repeat(3,1fr);

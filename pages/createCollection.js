@@ -95,22 +95,40 @@ function FileAndCollectionViewer() {
     }, [fileslist]);
 
     const submitPages = () => {
-        if(pagesChosen.includes(true))
+        if(fileSelected.toLowerCase().split('.')[fileSelected.toLowerCase().split('.').length - 1] === "pdf")
         {
-            setPagesSelected([...pagesSelected, 
-                ...pagesChosen.map((page, index) => ({filename: fileSelected, pageNumber: index, data: fileData[fileSelected].pages[index]}))
-                .filter(page => pagesChosen[page.pageNumber] === true)]);
-            setPagesChosen(pagesChosen.map(() => false));
+            if(pagesChosen.includes(true))
+            {
+                setPagesSelected([...pagesSelected, 
+                    ...pagesChosen.map((page, index) => ({filename: fileSelected, pageNumber: index+1, data: fileData[fileSelected].pages[index]}))
+                    .filter(page => pagesChosen[page.pageNumber-1] === true)]);
+                setPagesChosen(pagesChosen.map(() => false));
+            }
+        }
+        else
+        {
+            setPagesSelected([...pagesSelected, {filename: fileSelected, pageNumber: fileSelected, data: fileData[fileSelected].pages[0]} ]);
         }
     };
 
     const submitMorePages = deckNumber => {
-        if(pagesChosen.includes(true))
+        if(fileSelected.toLowerCase().split('.')[fileSelected.toLowerCase().split('.').length - 1] === "pdf")
+        {
+            if(pagesChosen.includes(true))
+            {
+                pagesAdded.current = {
+                    deckNo: Number(deckNumber), 
+                    pages: pagesChosen.map((page, index) => ({filename: fileSelected, pageNumber: index+1, data: fileData[fileSelected].pages[index]}))
+                            .filter(page => pagesChosen[page.pageNumber-1] === true)
+                }
+                setPagesChosen(pagesChosen.map(() => false));
+            }
+        }
+        else
         {
             pagesAdded.current = {
                 deckNo: Number(deckNumber), 
-                pages: pagesChosen.map((page, index) => ({filename: fileSelected, pageNumber: index, data: fileData[fileSelected].pages[index]}))
-                        .filter(page => pagesChosen[page.pageNumber] === true)
+                pages: [{filename: fileSelected, pageNumber: fileSelected, data: fileData[fileSelected].pages[0]}]
             }
             setPagesChosen(pagesChosen.map(() => false));
         }
@@ -201,32 +219,44 @@ function FileAndCollectionViewer() {
         //console.log("command set");   
         if( !pagesLoading && fileSelected)
         {
-            if(fileData[fileSelected].pages.length !== fileData[fileSelected].totalPages) 
+            let splitFilename = fileSelected.toLowerCase().split('.');
+            if(splitFilename[splitFilename.length - 1] === "mp4")
             {
-                let pages = [];
-                for(let i = 2; i <= fileData[fileSelected].totalPages; i++)
-                {
-                    pages.push(i);
-                }   
-                pagesData.current = pages;
-                setPagesLoading(true);
-            }
-        
-            let arr = [];
-            for(let i = 0; i < fileData[fileSelected].totalPages; i++)
-            {
-                let item;
-                do
-                {
-                    item = Math.floor(Math.random() * 10000);
-                }
-                while (arr.includes(item))
                 
-                arr.push(item);
             }
-            pageKeys.current = arr;
-    
-            setPagesChosen(pageKeys.current.map(() => (false)));
+            else if(splitFilename[splitFilename.length - 1] === "png")
+            {
+
+            }
+            else if(splitFilename[splitFilename.length - 1] === "pdf")
+            {
+                if(fileData[fileSelected].pages.length !== fileData[fileSelected].totalPages) 
+                {
+                    let pages = [];
+                    for(let i = 2; i <= fileData[fileSelected].totalPages; i++)
+                    {
+                        pages.push(i);
+                    }   
+                    pagesData.current = pages;
+                    setPagesLoading(true);
+                }
+
+                let arr = [];
+                for(let i = 0; i < fileData[fileSelected].totalPages; i++)
+                {
+                    let item;
+                    do
+                    {
+                        item = Math.floor(Math.random() * 10000);
+                    }
+                    while (arr.includes(item))
+                    
+                    arr.push(item);
+                }
+                pageKeys.current = arr;
+        
+                setPagesChosen(pageKeys.current.map(() => (false)));
+            }
         }
     }, [fileSelected]);
 
@@ -242,32 +272,44 @@ function FileAndCollectionViewer() {
         //console.log("command achieved");
         if( !pagesLoading && fileSelected)
         {
-            if(fileData[fileSelected].pages.length !== fileData[fileSelected].totalPages) 
+            let splitFilename = fileSelected.toLowerCase().split('.');
+            if(splitFilename[splitFilename.length - 1] === "mp4")
             {
-                let pages = [];
-                for(let i = 2; i <= fileData[fileSelected].totalPages; i++)
-                {
-                    pages.push(i);
-                }   
-                pagesData.current = pages;
-                setPagesLoading(true);
-            }
 
-            let arr = [];
-            for(let i = 0; i < fileData[fileSelected].totalPages; i++)
-            {
-                let item;
-                do
-                {
-                    item = Math.floor(Math.random() * 10000);
-                }
-                while (arr.includes(item))
-                
-                arr.push(item);
             }
-            pageKeys.current = arr;
-    
-            setPagesChosen(pageKeys.current.map(() => (false)));
+            else if(splitFilename[splitFilename.length - 1] === "png")
+            {
+
+            }
+            else if(splitFilename[splitFilename.length - 1] === "pdf")
+            {
+                if(fileData[fileSelected].pages.length !== fileData[fileSelected].totalPages) 
+                {
+                    let pages = [];
+                    for(let i = 2; i <= fileData[fileSelected].totalPages; i++)
+                    {
+                        pages.push(i);
+                    }   
+                    pagesData.current = pages;
+                    setPagesLoading(true);
+                }
+
+                let arr = [];
+                for(let i = 0; i < fileData[fileSelected].totalPages; i++)
+                {
+                    let item;
+                    do
+                    {
+                        item = Math.floor(Math.random() * 10000);
+                    }
+                    while (arr.includes(item))
+                    
+                    arr.push(item);
+                }
+                pageKeys.current = arr;
+        
+                setPagesChosen(pageKeys.current.map(() => (false)));
+            }
         }
     }, [pagesLoading]);
 
@@ -312,16 +354,17 @@ function FileAndCollectionViewer() {
                             { fileSelected && !filesUploading ? 
                                 viewmode === "List view:" ? 
                                     <FilePreviewGrid 
-                                        pagesKeys={pageKeys.current} blurred={pagesLoading && fileSelected}
+                                        fileSelected={fileSelected} blurred={pagesLoading && fileSelected}
                                         pagesChosen={ {array: pagesChosen, update: updatePagesChosen} }
                                         imageData={fileData[fileSelected].pages} /> 
                                     :<PagePreviewGrid 
-                                        pageKeys={pageKeys.current} blurred={pagesLoading && fileSelected}
+                                        fileSelected={fileSelected} blurred={pagesLoading && fileSelected}
                                         pagesChosen={ { array: pagesChosen, update: updatePagesChosen} }
                                         imageData={fileData[fileSelected].pages} /> 
                                 :(<></>) 
                             }
-                            { fileSelected && !filesUploading ?  
+                            { fileSelected && !filesUploading && 
+                                fileSelected.toLowerCase().split('.')[fileSelected.toLowerCase().split('.').length - 1] === "pdf" ?  
                                 <PreviewNavbarContextProvider value={{ 
                                     viewmode: {mode: viewmode, update: (mode) => updateViewmode(mode)},  range,
                                     pagesChosen: {array: pagesChosen, change: controlAllPages}, updateRange

@@ -23,6 +23,7 @@ function CollectionContainer({ pagesSelected, removePage, resetPagesSelected, up
         console.log("The collection has: ", collectionFiles);
     };
 
+    
     useEffect(() => {
         //console.log(pagesSelected.filter(page => !previousPages.current.includes(page)));
 
@@ -146,7 +147,7 @@ function CollectionContainer({ pagesSelected, removePage, resetPagesSelected, up
                             <div id="collectionViewer">
                                 {pagesSelected.map((page, index) => (
                                     <CollectionPage key={index} removePage={removePage}
-                                        pageData={{index: index, sourceData: page.data, name: (page.pageNumber+1)}} />
+                                        pageData={{index: index, sourceData: page.data, name: (page.pageNumber)}} />
                                 ))}
                             </div>
                         </>:
