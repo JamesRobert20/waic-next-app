@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from 'react'
 import PageNavigationBtn from './PageNavigationBtn'
 
-function PagePreviewGrid({ imageData, pageKeys, pagesChosen, blurred }) {
+function PagePreviewGrid({ imageData, pagesChosen, blurred, fileSelected }) {
     const [pageInView, setPageInView] = useState("");
     const [prevShouldAppear, setPrevShouldAppear] = useState(false);
     const [nextShouldAppear, setNextShouldAppear] = useState(false);
@@ -9,7 +9,19 @@ function PagePreviewGrid({ imageData, pageKeys, pagesChosen, blurred }) {
     let pagesList = useRef();
     let scrollAmount = useRef(0);
     let pagesOffsets = useRef([]);
-
+    let pageKeys = useRef([]);
+    
+    const getKey = () => {
+        let item;
+        do
+        {
+            item = Math.floor(Math.random() * 10000);
+        }
+        while (pageKeys.current.includes(item))
+        pageKeys.current = [...pageKeys.current, item];
+        return item;
+    }
+    
     useEffect(() => {
         setPrevShouldAppear(false);
         setNextShouldAppear(false);
@@ -19,10 +31,11 @@ function PagePreviewGrid({ imageData, pageKeys, pagesChosen, blurred }) {
 
         let arr = [];
         for(let hj = 0; hj < imageData.length; hj++)
-            arr[hj] = pagesList.current.childNodes[hj].offsetLeft;
+            arr[hj] = pagesList.current.childNodes[hj].offsetLeft - 600;
 
         pagesOffsets.current = arr;
-    },[imageData]);
+        //console.log(pagesOffsets);
+    },[imageData.length]);
 
     const getAmountScrolled = pagesListContainer => {
         let x = pagesListContainer.scrollLeft;
@@ -61,17 +74,18 @@ function PagePreviewGrid({ imageData, pageKeys, pagesChosen, blurred }) {
             //console.log(pagesOffsets.current[index]);
             //console.log(scrollAmount.current);
             //console.log(offsetDifference);
-            if(offsetDifference > 1000)
+            if(offsetDifference < 10)
             {
-                var quot = ~~((offsetDifference - 1000)/100);
-                quot--;
-                pagesList.current.scrollLeft = pagesList.current.scrollLeft + (quot*100);
-            }
-            else if(offsetDifference < 810)
-            {
-                var quot = ~~((810 - offsetDifference)/100);
+                offsetDifference = offsetDifference * (-1);
+                var quot = ~~((offsetDifference + 10)/100);
                 quot++;
-                pagesList.current.scrollLeft = pagesList.current.scrollLeft - (quot*100);
+                pagesList.current.scrollLeft = pagesList.current.scrollLeft - (quot*105);
+            }
+            else if(offsetDifference > 480)
+            {
+                var quot = ~~((offsetDifference - 480)/100);
+                quot++;
+                pagesList.current.scrollLeft = pagesList.current.scrollLeft + (quot*105);
             }
         }
 
@@ -103,7 +117,7 @@ function PagePreviewGrid({ imageData, pageKeys, pagesChosen, blurred }) {
                 id="PagesListContainer" onScroll={(e) => getAmountScrolled(e.target)}>
                 {
                     imageData.map((data, index) => (
-                        <div key={pageKeys[index]} className="wholeGPageContainer">
+                        <div key={getKey()} className="wholeGPageContainer">
                             <div 
                                 className={pageInView === (""+index)? "pageDisplayItem-1 galleryPageSelected": "pageDisplayItem-1" } 
                                 onClick={() => updatePageInView(index, "")}

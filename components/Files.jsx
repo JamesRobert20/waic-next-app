@@ -33,7 +33,7 @@ function Files() {
         <div key={getKey()} onClick={ () => fileClick(file.filename) } 
             className={ "search-result " + (fileSelected === file.filename ? "fileSelected" : "") } >
             { coversLoaded ? 
-                file.filename.split('.')[file.filename.split('.').length - 1] === "mp4" ?
+                file.filename.toLowerCase().split('.')[file.filename.toLowerCase().split('.').length - 1] === "mp4" ?
                     (<video className="result-file" src={fileData[file.filename].pages[0]}>Your browser does not support video preview!</video>)
                     :(<img alt={getFileName(file.filename) + " cover page"} className="result-file" src={fileData[file.filename].pages[0]} />)
                 :(<div className="result-file"></div>) 

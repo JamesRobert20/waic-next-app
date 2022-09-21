@@ -222,11 +222,11 @@ function FileAndCollectionViewer() {
             let splitFilename = fileSelected.toLowerCase().split('.');
             if(splitFilename[splitFilename.length - 1] === "mp4")
             {
-                
+                setViewmode("List view:");
             }
             else if(splitFilename[splitFilename.length - 1] === "png")
             {
-
+                setViewmode("List view:");
             }
             else if(splitFilename[splitFilename.length - 1] === "pdf")
             {

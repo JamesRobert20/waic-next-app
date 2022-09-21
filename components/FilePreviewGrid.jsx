@@ -17,9 +17,6 @@ function FilePreviewGrid({ imageData, pagesChosen, blurred, fileSelected }) {
         pageKeys.current = [...pageKeys.current, item];
         return item;
     }
-    
-        
-    
 
     return (
         <div id="filePreviewGrid" className={

@@ -107,13 +107,10 @@
     height: 95%;
     background-color: rgba(240, 240, 240, 0.856);
     @include flexDisplaying($direction: column, $justify: center, $align: center);
-    box-shadow: -2px 2px 9px $niceBlue;
-    border-radius: 12px;
+    border: 3px solid orange;
+    border-radius: 8px;
     transition: transform .25s;
-}
-#nextbtn-container
-{
-    box-shadow: 2px 2px 9px $niceBlue;
+    background-color: white;
 }
 .prevnextcontainers:active
 {
@@ -122,11 +119,11 @@
 .prevnextcontainers:hover
 {
     transform: scale(1.04);
-    box-shadow: -3px 5px 9px green;
+    box-shadow: -3px 5px 9px orange;
 }
 #nextbtn-container:hover
 {
-    box-shadow: 3px 5px 9px green;
+    box-shadow: 3px 5px 9px orange;
 }
 .prevnext-button
 {
@@ -159,16 +156,14 @@
 {
     width: 100%;
     height: 95%;
-    border: 1px solid black;
-    border-radius: 8px;
+    border: 2px solid black;
+    border-radius: 5px;
     transition: transform .5s;
-    box-shadow: 2px 2px 9px rgb(58, 149, 233);
     z-index: 100;
     position: relative;
 }
 .singlePage:hover
 {
-    box-shadow: 2px 2px 9px rgb(58, 149, 233);
     transform: scale(1.3);
 }
 #PagesListContainer
