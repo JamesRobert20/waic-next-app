@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useRef } from 'react'
 
 function HeadingComponent({ heading, updateHeading }) {
     const [mode, setMode] = useState("read");    

@@ -1,4 +1,3 @@
-import React from 'react';
 import Dropdownoption from './Dropdownoption';
 
 function Categorydropdown(props) {

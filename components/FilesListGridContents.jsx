@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import FilesList from './FilesList';
 import DestinationPrompts from './DestinationPrompts';
 
