@@ -79,13 +79,13 @@ function PagePreviewGrid({ imageData, pagesChosen, blurred, fileSelected }) {
                 offsetDifference = offsetDifference * (-1);
                 var quot = ~~((offsetDifference + 10)/100);
                 quot++;
-                pagesList.current.scrollLeft = pagesList.current.scrollLeft - (quot*105);
+                pagesList.current.scrollLeft = pagesList.current.scrollLeft - (quot*120);
             }
             else if(offsetDifference > 480)
             {
                 var quot = ~~((offsetDifference - 480)/100);
                 quot++;
-                pagesList.current.scrollLeft = pagesList.current.scrollLeft + (quot*105);
+                pagesList.current.scrollLeft = pagesList.current.scrollLeft + (quot*120);
             }
         }
 

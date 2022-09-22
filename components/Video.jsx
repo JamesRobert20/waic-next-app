@@ -1,9 +1,9 @@
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 
 function Video({ index, url, filename, coverPageDone, mode, classNameGiven }) {
     const videoRef = useRef(); 
 
-    const obtainData = () => {
+    const obtainData = useCallback(() => {
         if (mode === "initial")
         {
             /* setTimeout(() => {
@@ -17,7 +17,7 @@ function Video({ index, url, filename, coverPageDone, mode, classNameGiven }) {
             }, 2500); */
             coverPageDone(index, filename, url, null);
         }
-    }; 
+    }, [index, filename, url]); 
 
     return (
         <video ref={videoRef} onCanPlayThrough={obtainData} className={classNameGiven ? classNameGiven : ""} controls>

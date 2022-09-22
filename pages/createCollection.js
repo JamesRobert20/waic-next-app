@@ -318,7 +318,7 @@ function FileAndCollectionViewer() {
         var minRange = Number(range["min"].trim());
         var maxRange = Number(range["max"].trim());
 
-        setPagesChosen([...pagesChosen.slice(0, minRange-1), ...Array.apply(null, {length: maxRange - minRange + 1}).map(() => (true)), ...pagesChosen.slice(maxRange, pagesChosen.length)]);
+        setPagesChosen(pagesChosen.map((elem, index) => (index >= minRange - 1 && index <= maxRange - 1 )));
     };
 
     //console.log("The App re rendered");
