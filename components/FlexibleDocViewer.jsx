@@ -1,4 +1,4 @@
-import dynamic from "next/dynamic"
+/* import dynamic from "next/dynamic"
 //import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer"
 //import { useEffect } from "react"
 const DocViewer = dynamic(
@@ -22,11 +22,11 @@ function FlexibleDocViewer({ docs }) {
             console.log(DocViewer);
             console.log(DocViewerRenderers);
         })();
-    },[]); */
+    },[]); 
 
     return (
         <DocViewer documents={docs} pluginRenderers={[PDFRenderer, PNGRenderer]} />
     )
 }
 
-export default FlexibleDocViewer
+export default FlexibleDocViewer */

@@ -137,7 +137,7 @@ function FileAndCollectionViewer() {
     const removePage = (page, number) => {
         let arr = [...pagesSelected];
         arr.splice(page, number);
-        setPagesSelected(arr);
+        setPagesSelected(arr); 
     };
 
     const resetPagesSelected = () => {

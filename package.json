@@ -9,13 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "array-move": "^4.0.0",
     "netlify-identity-widget": "^1.9.2",
     "next": "12.3.0",
+    "pdf-lib": "^1.17.1",
     "pdfjs-dist": "^2.16.105",
     "react": "18.2.0",
-    "react-doc-viewer": "^0.1.5",
     "react-dom": "18.2.0",
     "react-icons": "^4.4.0",
+    "react-sortable-hoc": "^2.0.0",
     "sass": "^1.54.9"
   },
   "devDependencies": {

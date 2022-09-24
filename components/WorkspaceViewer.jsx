@@ -159,7 +159,7 @@ function WorkspaceViewer({ numOfWorkspaces, file, workspaceNum, collectionFiles,
                     fileToDisplay.pages.map((page, index) => (
                         <CollectionPage 
                             key={index} removeCollectionPage={removeCollectionPage} pageSize={numOfWorkspaces === 1 ? "single-view" : numOfWorkspaces === 2 ? "two-view" : "three-view"}
-                            pageData={{index: index, sourceData: page.data, name: (page.pageNumber)}} />
+                            pageData={{index: index, sourceData: page.data, name: (page.pageNumber)}} sortableIndex={index} />
                     ))
                     : <></>
                 }

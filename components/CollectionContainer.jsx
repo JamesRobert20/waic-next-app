@@ -1,8 +1,50 @@
 import { useState, useEffect, useRef } from 'react'
 import CollectionPage from './CollectionPage';
-import Workspaces from './Workspaces';
+import WorkspaceViewer from './WorkspaceViewer';
 import HeadingComponent from './HeadingComponent'
 import { GiCancel } from 'react-icons/gi'
+import dynamic from 'next/dynamic';
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
+//import { arrayMove } from 'array-move'
+
+
+/* const DragDropContext = dynamic(
+    () =>
+      import('react-beautiful-dnd').then(mod => {
+        return mod.DragDropContext;
+      }),
+    {ssr: false},
+  );
+  const Droppable = dynamic(
+    () =>
+      import('react-beautiful-dnd').then(mod => {
+        return mod.Droppable;
+      }),
+    {ssr: false},
+  );
+  const Draggable = dynamic(
+    () =>
+      import('react-beautiful-dnd').then(mod => {
+        return mod.Draggable;
+      }),
+    {ssr: false},
+  ); */
+
+  const SortableItem = SortableElement( ({ value, index, elemIn, removePage }) => {
+        return (
+        <div className="draggableItem-1">
+            <CollectionPage  removePage={removePage} pageData={{ index: elemIn, sourceData: value.data, name: (value.pageNumber) }} />
+        </div>
+        )
+    });
+
+const SortableList = SortableContainer( ({ items, removePage, getDraggableKey }) => (
+    <div className="collectionViewer">
+        {items.map((value, index) => (
+            <SortableItem value={value} index={index} key={getDraggableKey(index)} elemIn={index} removePage={removePage} />
+        ))}
+    </div>
+));
 
 function CollectionContainer({ pagesSelected, removePage, resetPagesSelected, updateInsertToCollectionBtn, pagesAdded, resetPagesAdded }) {
     const [containerState, setContainerState] = useState("gatheringPages"); 
@@ -12,6 +54,26 @@ function CollectionContainer({ pagesSelected, removePage, resetPagesSelected, up
     const [viewMode, setViewMode] = useState("Full list");
     const [undoItems, setUndoItems] = useState({ active: false, item: null, index: null });
     const fileClicked = useRef({});
+
+    const draggableKeys = useRef([]);
+
+    const getKey = () => {
+        let item;
+        do
+        {
+            item = Math.floor(Math.random() * 10000);
+        }
+        while (draggableKeys.current.includes(item))
+        draggableKeys.current = [...draggableKeys.current, item];
+        return item;
+    };
+
+    const getDraggableKey = (elemIndex) => {
+        if(draggableKeys.current.length < elemIndex + 1)
+            return getKey();
+
+        return draggableKeys.current[elemIndex];
+    };
 
     const [collectionHeading, setCollectionHeading] = useState("My New Collection");
 
@@ -114,8 +176,12 @@ function CollectionContainer({ pagesSelected, removePage, resetPagesSelected, up
 
         setViewMode(newMode);
     };
-    
-    //console.log("These pages ", pagesSelected, "have been selected");
+
+    /* const onSortEnd = ({ oldIndex, newIndex }) => {
+        let arr = arrayMove(pagesSelected, oldIndex, newIndex);
+        console.log("The old arrangement is ", pagesSelected);
+        console.log("The new arrangement is ", arr);
+    }; */
 
     return (
         <div id="collection-tags-Parent">
@@ -144,12 +210,7 @@ function CollectionContainer({ pagesSelected, removePage, resetPagesSelected, up
                                     <img alt="back" title="Back to Full List" width="33px" src="images/back.png" id="backButton" />
                                 </div>
                             </div>
-                            <div id="collectionViewer">
-                                {pagesSelected.map((page, index) => (
-                                    <CollectionPage key={index} removePage={removePage}
-                                        pageData={{index: index, sourceData: page.data, name: (page.pageNumber)}} />
-                                ))}
-                            </div>
+                            <SortableList items={pagesSelected} onSortEnd={() => console.log("this guys says ", pagesSelected)} axis='xy' removePage={removePage} getDraggableKey={getDraggableKey} />
                         </>:
                         <>
                             <div id="package-navbar">
@@ -194,12 +255,25 @@ function CollectionContainer({ pagesSelected, removePage, resetPagesSelected, up
                                                 </div>
                                             </div>
                                         ))}
-                                    </div>
-                                    :<Workspaces 
-                                        saveCollectionFile={saveCollectionFile}
-                                        number={Number(viewMode[0])} fileClicked={fileClicked.current} 
-                                        collectionFiles={collectionFiles} pagesAdded={pagesAdded} 
-                                    />
+                                    </div>:
+                                    <>
+                                        <WorkspaceViewer 
+                                            numOfWorkspaces={Number(viewMode[0])} saveFile={saveCollectionFile}
+                                            file={fileClicked.current} workspaceNum={1} collectionFiles={collectionFiles} pagesAdded={pagesAdded}
+                                        />
+                                        { Number(viewMode[0]) >= 2 &&
+                                            <WorkspaceViewer 
+                                                numOfWorkspaces={Number(viewMode[0])} saveFile={saveCollectionFile}
+                                                file={{}} workspaceNum={2} collectionFiles={collectionFiles} pagesAdded={pagesAdded}
+                                            />
+                                        }
+                                        { Number(viewMode[0]) === 3 &&
+                                            <WorkspaceViewer 
+                                                numOfWorkspaces={Number(viewMode[0])} saveFile={saveCollectionFile}
+                                                file={{}} workspaceNum={3} collectionFiles={collectionFiles} pagesAdded={pagesAdded}
+                                            />
+                                        }
+                                    </>
                                 }
                             </div>
                         </>

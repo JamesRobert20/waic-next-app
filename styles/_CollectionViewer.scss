@@ -138,7 +138,7 @@
 {
     margin-left: 4px;
 }
-#collectionViewer
+.collectionViewer
 {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
@@ -153,17 +153,17 @@
     scrollbar-color: rgb(58, 149, 233) white;
 }
 /* supported in chrome, edge, safari only */
-#collectionViewer::-webkit-scrollbar
+.collectionViewer::-webkit-scrollbar
 {
     width: 11px;
 } 
-#collectionViewer::-webkit-scrollbar-track
+.collectionViewer::-webkit-scrollbar-track
 {
     border: 2px solid aliceblue;
     border-radius: 16px;
     background-color: grey;
 }
-#collectionViewer::-webkit-scrollbar-thumb
+.collectionViewer::-webkit-scrollbar-thumb
 {
     width: 11px;
     background-color: white;

@@ -1,4 +1,4 @@
-import FlexibleDocViewer from "../components/FlexibleDocViewer"
+/* import FlexibleDocViewer from "../components/FlexibleDocViewer"
 
 function docViewTest() {
     const docs = [
@@ -16,4 +16,4 @@ function docViewTest() {
     )
 }
 
-export default docViewTest
+export default docViewTest */
