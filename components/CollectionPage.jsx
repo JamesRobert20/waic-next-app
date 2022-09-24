@@ -16,7 +16,7 @@ function CollectionPage({ pageSize, pageData, removePage, removeCollectionPage }
                     <div className="pageNumber">{pageData.name}</div>
                 </div>
                 <div className={"cancelContainer deckItem"}>
-                    <div title="remove this page" className="cancelBtn" onMouseDown={() => removeCollectionPage(pageData.index)}>
+                    <div title="remove this page" className="cancelBtn" onTouchStart={() => removeCollectionPage(pageData.index)} onMouseDown={() => removeCollectionPage(pageData.index)}>
                         <GiCancel className="cancelImg" />
                     </div>
                 </div>
@@ -31,7 +31,7 @@ function CollectionPage({ pageSize, pageData, removePage, removeCollectionPage }
                     <div className="mediumPageNumber pageNumber">{pageData.name}</div>
                 </div>
                 <div className={"cancelContainer deckItem"}>
-                    <div title="remove this page" className="cancelBtn" onMouseDown={() => removeCollectionPage(pageData.index)}>
+                    <div title="remove this page" className="cancelBtn" onTouchStart={() => removeCollectionPage(pageData.index)} onMouseDown={() => removeCollectionPage(pageData.index)}>
                         <GiCancel className="cancelImg" />
                     </div>
                 </div>
@@ -46,7 +46,7 @@ function CollectionPage({ pageSize, pageData, removePage, removeCollectionPage }
                     <div className="pageNumber">{pageData.name}</div>
                 </div>
                 <div className={"cancelContainer deckItem"}>
-                    <div title="remove this page" className="cancelBtn" onMouseDown={() => removeCollectionPage(pageData.index)}>
+                    <div title="remove this page" className="cancelBtn" onTouchStart={() => removeCollectionPage(pageData.index)} onMouseDown={() => removeCollectionPage(pageData.index)}>
                         <GiCancel className="cancelImg" />
                     </div>
                 </div>
@@ -60,7 +60,7 @@ function CollectionPage({ pageSize, pageData, removePage, removeCollectionPage }
                     <div className="pageNumber">{pageData.name}</div>
                 </div>
                 <div className={"cancelContainer deckItem"}>
-                    <div title="remove this page" className="cancelBtn" onMouseDown={() => removePage(pageData.index, 1)}>
+                    <div title="remove this page" className="cancelBtn" onTouchStart={() => removeCollectionPage(pageData.index)} onMouseDown={() => removePage(pageData.index, 1)}>
                         <GiCancel className="cancelImg" />
                     </div>
                 </div>
