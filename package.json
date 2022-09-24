@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "array-move": "^4.0.0",
     "netlify-identity-widget": "^1.9.2",
     "next": "12.3.0",
     "pdf-lib": "^1.17.1",

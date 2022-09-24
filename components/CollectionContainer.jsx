@@ -5,8 +5,6 @@ import HeadingComponent from './HeadingComponent'
 import { GiCancel } from 'react-icons/gi'
 import dynamic from 'next/dynamic';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
-//import { arrayMove } from 'array-move'
-
 
 /* const DragDropContext = dynamic(
     () =>
@@ -46,7 +44,7 @@ const SortableList = SortableContainer( ({ items, removePage, getDraggableKey })
     </div>
 ));
 
-function CollectionContainer({ pagesSelected, removePage, resetPagesSelected, updateInsertToCollectionBtn, pagesAdded, resetPagesAdded }) {
+function CollectionContainer({ pagesSelected, removePage, resetPagesSelected, updateInsertToCollectionBtn, pagesAdded, resetPagesAdded, changePagesSelected }) {
     const [containerState, setContainerState] = useState("gatheringPages"); 
     const previousPages = useRef(pagesSelected);
     const [topNavUndo, setTopNavUndo] = useState({ active: false, startIndex: 0, amount: 0});
@@ -177,11 +175,15 @@ function CollectionContainer({ pagesSelected, removePage, resetPagesSelected, up
         setViewMode(newMode);
     };
 
-    /* const onSortEnd = ({ oldIndex, newIndex }) => {
-        let arr = arrayMove(pagesSelected, oldIndex, newIndex);
-        console.log("The old arrangement is ", pagesSelected);
-        console.log("The new arrangement is ", arr);
-    }; */
+    const onSortEnd = ({ oldIndex, newIndex }) => {
+        if(oldIndex !== newIndex)
+        {
+            let arr = [...pagesSelected];
+            arr.splice(oldIndex, 1);
+            //console.log("New array should be ", [...arr.slice(0, newIndex), pagesSelected[oldIndex], ...arr.slice(newIndex)]);
+            changePagesSelected([...arr.slice(0, newIndex), pagesSelected[oldIndex], ...arr.slice(newIndex)]);
+        }
+    }; 
 
     return (
         <div id="collection-tags-Parent">
@@ -210,7 +212,7 @@ function CollectionContainer({ pagesSelected, removePage, resetPagesSelected, up
                                     <img alt="back" title="Back to Full List" width="33px" src="images/back.png" id="backButton" />
                                 </div>
                             </div>
-                            <SortableList items={pagesSelected} onSortEnd={() => console.log("this guys says ", pagesSelected)} axis='xy' removePage={removePage} getDraggableKey={getDraggableKey} />
+                            <SortableList items={pagesSelected} onSortEnd={onSortEnd} axis='xy' removePage={removePage} getDraggableKey={getDraggableKey} />
                         </>:
                         <>
                             <div id="package-navbar">

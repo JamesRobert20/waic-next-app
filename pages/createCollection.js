@@ -144,6 +144,10 @@ function FileAndCollectionViewer() {
         setPagesSelected([]);
     };
 
+    const changePagesSelected = (newArray) => {
+        setPagesSelected(newArray);
+    };
+
     const debounce = (func) => {
         let timer;
         return function (...args) {
@@ -384,8 +388,8 @@ function FileAndCollectionViewer() {
                         <InsertIntoCollectionButtons submitPages={submitPages} submitMorePages={submitMorePages} insertToCollectionBtn={insertToCollectionBtn} />
                     </div>
                     <CollectionContainer 
-                        pagesSelected={pagesSelected} removePage={removePage} resetPagesSelected={resetPagesSelected}
-                        updateInsertToCollectionBtn={updateInsertToCollectionBtn} pagesAdded={pagesAdded.current} resetPagesAdded={resetPagesAdded}
+                        pagesSelected={pagesSelected} removePage={removePage} pagesAdded={pagesAdded.current} resetPagesSelected={resetPagesSelected} 
+                        changePagesSelected={changePagesSelected} updateInsertToCollectionBtn={updateInsertToCollectionBtn}  resetPagesAdded={resetPagesAdded}
                     />
                 </center>
             </div>
