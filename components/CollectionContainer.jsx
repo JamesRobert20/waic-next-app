@@ -6,6 +6,22 @@ import { GiCancel } from 'react-icons/gi'
 import dynamic from 'next/dynamic';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
+const SortableItem = SortableElement( ({ value, index, elemIn, removePage }) => {
+    return (
+    <div className="draggableItem-1">
+        <CollectionPage  removePage={removePage} pageData={{ index: elemIn, sourceData: value.data, name: (value.pageNumber) }} />
+    </div>
+    )
+});
+
+const SortableList = SortableContainer( ({ items, removePage, getDraggableKey }) => (
+<div className="collectionViewer">
+    {items.map((value, index) => (
+        <SortableItem value={value} index={index} key={getDraggableKey(index)} elemIn={index} removePage={removePage} />
+    ))}
+</div>
+));
+
 /* const DragDropContext = dynamic(
     () =>
       import('react-beautiful-dnd').then(mod => {
@@ -27,22 +43,6 @@ import { SortableContainer, SortableElement } from 'react-sortable-hoc';
       }),
     {ssr: false},
   ); */
-
-  const SortableItem = SortableElement( ({ value, index, elemIn, removePage }) => {
-        return (
-        <div className="draggableItem-1">
-            <CollectionPage  removePage={removePage} pageData={{ index: elemIn, sourceData: value.data, name: (value.pageNumber) }} />
-        </div>
-        )
-    });
-
-const SortableList = SortableContainer( ({ items, removePage, getDraggableKey }) => (
-    <div className="collectionViewer">
-        {items.map((value, index) => (
-            <SortableItem value={value} index={index} key={getDraggableKey(index)} elemIn={index} removePage={removePage} />
-        ))}
-    </div>
-));
 
 function CollectionContainer({ pagesSelected, removePage, resetPagesSelected, updateInsertToCollectionBtn, pagesAdded, resetPagesAdded, changePagesSelected }) {
     const [containerState, setContainerState] = useState("gatheringPages"); 
