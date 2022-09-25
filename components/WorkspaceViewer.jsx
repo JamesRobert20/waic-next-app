@@ -220,18 +220,7 @@ function WorkspaceViewer({ numOfWorkspaces, file, workspaceNum, collectionFiles,
                 </>: <></>
             }
             </div> 
-            <SortableList axis='xy' area={"viewer-"+workspaceNum}
-                onMouseEnter={() => handleAreaMouseEnter("viewer-"+workspaceNum)}
-                draggingItem={draggingItem}
-                isDragging={isDragging}
-                sourceArea={sourceArea}
-                targetArea={targetArea}
-                ref={enableRef}
-                selfRef={workspaceRef}
-                otherRef={otherWorkspaceRef}
-                onSortStart={handleDragStart}
-                onSortOver={handleDragOver}
-                onSortEnd={handleDragEnd}
+            <SortableList axis='xy' pressDelay={100}
                 getDraggableKey={getDraggableKey} removeCollectionPage={removeCollectionPage} onSortEnd={onSortEnd}
                 pageSize={numOfWorkspaces === 1 ? "single-view" : numOfWorkspaces === 2 ? "two-view" : "three-view"}
                 containerClassname={

@@ -212,7 +212,7 @@ function CollectionContainer({ pagesSelected, removePage, resetPagesSelected, up
                                     <img alt="back" title="Back to Full List" width="33px" src="images/back.png" id="backButton" />
                                 </div>
                             </div>
-                            <SortableList items={pagesSelected} onSortEnd={onSortEnd} axis='xy' removePage={removePage} getDraggableKey={getDraggableKey} />
+                            <SortableList items={pagesSelected} onSortEnd={onSortEnd} axis='xy' pressDelay={100} removePage={removePage} getDraggableKey={getDraggableKey} />
                         </>:
                         <>
                             <div id="package-navbar">
