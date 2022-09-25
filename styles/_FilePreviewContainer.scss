@@ -258,7 +258,7 @@
 {
     border: 2px solid $niceYellow;
     height: 6.5%;
-    width: 99.5%;
+    width: 99.9%;
     border-radius: 5px;
     @include flexDisplaying($align: center, $justify: center);
     margin-top: 2px;
@@ -305,7 +305,7 @@
 {
     cursor: pointer;
     color: green !important;
-    margin: 3.5px 0 0 18px;
+    margin: 3.5px 0 0 15px;
 }
 .preview-nav-labels
 {

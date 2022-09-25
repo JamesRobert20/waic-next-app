@@ -72,7 +72,7 @@
 }
 #deckContainer
 {
-    width: 1080px;
+    width: 1120px;
     border: 7px solid $niceYellow;
     display: flex;
     flex-direction: column;
@@ -118,7 +118,7 @@
     cursor: pointer;
     border: 1px solid $niceBlue;
     border-radius: 6px;
-    height: 74%;
+    height: 75%;
     color: $niceBlue;
 }
 .collectionContainerBtns:active
@@ -197,6 +197,7 @@
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: repeat(10000, auto);
+    justify-items: start;
     overflow-y: auto;
     width: 100%;
     height: 91%;
@@ -227,19 +228,20 @@
     display: grid;
     grid-template: repeat(500, auto) / repeat(6, auto);
     overflow-y: auto;
-    padding-left: 14px;
+    padding-left: 5px;
 }
 .three-view-display
 {
+    height: 80% !important;
     display: grid;
     grid-template: repeat(500, auto) / repeat(5, auto);
     overflow-y: auto;
-    padding-left: 10px;
+    padding-right: 1px;
 }
 .workspace-displayer
 {
-    width: 99%;
-    height: 81%;
+    width: 100%;
+    height: 81.8%;
 }
 /* works on firfeox */
 .workspace-displayer, #full-mode
@@ -505,14 +507,14 @@
 {
     padding-left: 5px;
     border-radius: 5px 5px 0px 0px;
-    border: 2px solid grey;
+    border: 2px inset $niceYellow;
     width: 99.5%;
     height: 9%;
     @include flexDisplaying($direction: row, $justify: space-evenly, $align: center);
 }
 .bottom-navbar-three
 {
-    height: 11.5% !important;
+    height: 13% !important;
     @include flexDisplaying($direction: row, $justify: space-evenly);
 }
 .bottom-select-container, .bottom-select-container-three

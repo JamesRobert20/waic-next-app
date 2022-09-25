@@ -1,6 +1,26 @@
 import HeadingComponent from './HeadingComponent'
 import CollectionPage from './CollectionPage';
 import { useEffect, useState, useRef } from 'react'
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
+
+const SortableItem = SortableElement( ({ value, index, elemIn, removeCollectionPage, pageSize }) => {
+    return (
+    <div className="draggableItem-1">
+        <CollectionPage removeCollectionPage={removeCollectionPage} pageSize={pageSize}
+            pageData={{index: elemIn, sourceData: value.data, name: (value.pageNumber)}} 
+        />
+    </div>
+    )
+});
+
+const SortableList = SortableContainer( ({ removeCollectionPage, getDraggableKey, containerClassname, fileToDisplay, pageSize }) => (
+    <div className={containerClassname}>
+        {fileToDisplay.name && fileToDisplay.pages.map((page, index) => (
+            <SortableItem value={page} index={index} elemIn={index} key={getDraggableKey(index)} removeCollectionPage={removeCollectionPage} pageSize={pageSize} />
+        ))}
+    </div>
+));
+
 
 function WorkspaceViewer({ numOfWorkspaces, file, workspaceNum, collectionFiles, saveFile, pagesAdded }) {
     const [fileToDisplay, setFileToDisplay] = useState(file);
@@ -8,6 +28,25 @@ function WorkspaceViewer({ numOfWorkspaces, file, workspaceNum, collectionFiles,
     const [undoObject, setUndoObject] = useState({});
     const [heading, setHeading] = useState(fileToDisplay.name);
     const prevHeading = useRef(heading);
+    const draggableKeys = useRef([]);
+
+    const getKey = () => {
+        let item;
+        do
+        {
+            item = Math.floor(Math.random() * 10000);
+        }
+        while (draggableKeys.current.includes(item))
+        draggableKeys.current = [...draggableKeys.current, item];
+        return item;
+    };
+
+    const getDraggableKey = (elemIndex) => {
+        if(draggableKeys.current.length < elemIndex + 1)
+            return getKey();
+
+        return draggableKeys.current[elemIndex];
+    };
 
     //console.log("workspace ", workspaceNum, "renders ", heading);
     //console.log("workspace ", workspaceNum, "renders the file ", fileToDisplay);
@@ -98,6 +137,19 @@ function WorkspaceViewer({ numOfWorkspaces, file, workspaceNum, collectionFiles,
         setUndoObject({});
     };
 
+    const undoCollectionPageSorting = () => {
+        if(!saveActive)
+            setSaveActive(true);
+        setFileToDisplay(
+            {
+                name: fileToDisplay.name,
+                pages: undoObject.previousOrder,
+                index: fileToDisplay.index
+            }
+        );
+        setUndoObject({});
+    };
+
     const updateFileToDisplay = selectedOption => {
 
         setUndoObject({ active: false, from: "", previousOrder: [], page: [], index: null });
@@ -111,9 +163,30 @@ function WorkspaceViewer({ numOfWorkspaces, file, workspaceNum, collectionFiles,
             //console.log();
             prevHeading.current = selectedFile.name
             setHeading(selectedFile.name);
+            //updateFileToDisplayContext(workspaceNum, selectedFile);
             setFileToDisplay(selectedFile);
         }
     };
+
+    const onSortEnd = ({ oldIndex, newIndex }) => {
+        if(oldIndex !== newIndex)
+        {
+            let arr = [...fileToDisplay.pages];
+            arr.splice(oldIndex, 1);
+            //console.log("New array should be ", [...arr.slice(0, newIndex), pagesSelected[oldIndex], ...arr.slice(newIndex)]);
+            //[...arr.slice(0, newIndex), pagesSelected[oldIndex], ...arr.slice(newIndex)]
+            if(!saveActive)
+                setSaveActive(true);
+            setUndoObject({ active: true, from: "sorting", previousOrder:  fileToDisplay.pages });
+            setFileToDisplay(
+                {
+                    name: fileToDisplay.name,
+                    pages: [...arr.slice(0, newIndex), fileToDisplay.pages[oldIndex], ...arr.slice(newIndex)],
+                    index: fileToDisplay.index
+                }
+            );
+        }
+    }; 
 
     return (
         <div 
@@ -135,7 +208,7 @@ function WorkspaceViewer({ numOfWorkspaces, file, workspaceNum, collectionFiles,
                         () => undoCollectionPageRemoval() :
                         undoObject.from === "morePages" ?
                         () => undoMorePagesAdded() :
-                        () => {}
+                        () => undoCollectionPageSorting()
                     } 
                 />
                 <button 
@@ -147,23 +220,29 @@ function WorkspaceViewer({ numOfWorkspaces, file, workspaceNum, collectionFiles,
                 </>: <></>
             }
             </div> 
-            <div 
-                className={
+            <SortableList axis='xy' area={"viewer-"+workspaceNum}
+                onMouseEnter={() => handleAreaMouseEnter("viewer-"+workspaceNum)}
+                draggingItem={draggingItem}
+                isDragging={isDragging}
+                sourceArea={sourceArea}
+                targetArea={targetArea}
+                ref={enableRef}
+                selfRef={workspaceRef}
+                otherRef={otherWorkspaceRef}
+                onSortStart={handleDragStart}
+                onSortOver={handleDragOver}
+                onSortEnd={handleDragEnd}
+                getDraggableKey={getDraggableKey} removeCollectionPage={removeCollectionPage} onSortEnd={onSortEnd}
+                pageSize={numOfWorkspaces === 1 ? "single-view" : numOfWorkspaces === 2 ? "two-view" : "three-view"}
+                containerClassname={
                     numOfWorkspaces === 1 ? 
                     "workspace-displayer single-view-display":
                     numOfWorkspaces === 2 ? 
                     "workspace-displayer two-view-display" : 
                     "workspace-displayer three-view-display"
-            }>
-                {fileToDisplay.name?
-                    fileToDisplay.pages.map((page, index) => (
-                        <CollectionPage 
-                            key={index} removeCollectionPage={removeCollectionPage} pageSize={numOfWorkspaces === 1 ? "single-view" : numOfWorkspaces === 2 ? "two-view" : "three-view"}
-                            pageData={{index: index, sourceData: page.data, name: (page.pageNumber)}} sortableIndex={index} />
-                    ))
-                    : <></>
-                }
-            </div>
+                } 
+                fileToDisplay={fileToDisplay} 
+            />
             <div className={numOfWorkspaces === 3 ? "bottom-navbar-three" : "workspace-bottom-navbar"}>
                 <div className={numOfWorkspaces === 3 ? "bottom-select-container-three" : "bottom-select-container"}>
                     <label htmlFor={"deck-to-view-"+workspaceNum} className='bottom-select-labels'>Select deck to view: </label>
