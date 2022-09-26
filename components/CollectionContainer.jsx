@@ -3,7 +3,9 @@ import CollectionPage from './CollectionPage';
 import WorkspaceViewer from './WorkspaceViewer';
 import HeadingComponent from './HeadingComponent'
 import { GiCancel } from 'react-icons/gi'
-import dynamic from 'next/dynamic';
+//import dynamic from 'next/dynamic';
+//import { PDFDocument } from 'pdf-lib'
+
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
 const SortableItem = SortableElement( ({ value, index, elemIn, removePage }) => {
@@ -44,15 +46,16 @@ const SortableList = SortableContainer( ({ items, removePage, getDraggableKey })
     {ssr: false},
   ); */
 
-function CollectionContainer({ pagesSelected, removePage, resetPagesSelected, updateInsertToCollectionBtn, pagesAdded, resetPagesAdded, changePagesSelected }) {
+function CollectionContainer({ fileData, pagesSelected, removePage, resetPagesSelected, updateInsertToCollectionBtn, pagesAdded, resetPagesAdded, changePagesSelected }) {
     const [containerState, setContainerState] = useState("gatheringPages"); 
     const previousPages = useRef(pagesSelected);
     const [topNavUndo, setTopNavUndo] = useState({ active: false, startIndex: 0, amount: 0});
     const [collectionFiles, setCollectionFiles] = useState([]);
     const [viewMode, setViewMode] = useState("Full list");
     const [undoItems, setUndoItems] = useState({ active: false, item: null, index: null });
+    const [collectionHeading, setCollectionHeading] = useState("My New Collection");
     const fileClicked = useRef({});
-
+    
     const draggableKeys = useRef([]);
 
     const getKey = () => {
@@ -73,16 +76,89 @@ function CollectionContainer({ pagesSelected, removePage, resetPagesSelected, up
         return draggableKeys.current[elemIndex];
     };
 
-    const [collectionHeading, setCollectionHeading] = useState("My New Collection");
+    
 
     const updateCollectionHeading = newHeading => {
         setCollectionHeading(newHeading);
     };
 
-    const downloadCollection = () => {
-        console.log("The collection has: ", collectionFiles);
-    };
+    async function downloadCollection()
+    {
+        try{
+            //let urL = fileData["percyjack.pdf"].fileUrl;
+            //console.log("the file url given was: ", urL);
 
+            //const existingPdfBytes = await fetch(urL).then(res => res.arrayBuffer());
+            //console.log(existingPdfBytes);
+            //const pdfDoc = await PDFDocument.load(existingPdfBytes);
+            //const pdfBytes = await pdfDoc.save();
+
+            //console.log(pdfBytes);
+
+            //fs.writeFileSync('/files/testings.pdf', pdfBytes)
+
+            //console.log("what does his return ", existingPdfBytes)
+            //console.log(collectionFiles);
+            let remadeFiles = collectionFiles.map(file => ({ 
+                name: file.name, 
+                index: file.index, 
+                pages: file.pages.map(page => ({ fileFrom: page.filename, pageNumber: page.pageNumber })),
+                exportAs: "pdf"
+            }));
+            const response = await (await fetch('/api/downloadCollection', {
+                method: 'POST',
+                body: JSON.stringify({ collectionName: collectionHeading, collection_files: remadeFiles }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })).json();
+            console.log("response returned is ", response);
+            alert(response);
+        }
+        catch(e)
+        {
+            console.log("Error happens in second box and it says: ", e)
+        }
+        
+        //console.log("The collection has: ", collectionFiles);
+        //console.log(fileData);
+
+        /* try{
+            const pdfDoc = await PDFDocument.create()
+            const page = pdfDoc.addPage()
+            page.drawText('You can create PDFs!')
+            const pdfBytes = await pdfDoc.save()
+        }
+        catch(e)
+        {
+            console.log("Error happens in first box and it says: ", e)
+        }
+        
+        try{
+            let urL = fileData["percyjack.pdf"].fileUrl;
+            console.log("the file url given was: ", urL);
+            const existingPdfBytes = await fetch(urL).then(res => res.arrayBuffer())
+            const pdfDoc_two = await PDFDocument.load(urL)
+            const pages_two = pdfDoc_two.getPages()
+            const pdfBytes_two = await pdfDoc_two.save() 
+            console.log(pdfBytes_two);
+            //setDownloadThingy(pdfBytes_two);
+            const generatedFileUrl = URL.createObjectURL(new Blob(pdfBytes_two, {type: "application/pdf"}));
+            console.log("generated blob is", generatedFileUrl);
+            //URL.revokeObjectURL(generatedFileUrl);
+            /* const fs = dynamic(
+                () => import('fs'),
+                { ssr: true }
+            );
+            fs.writeFileSync('/files/testings.pdf', pdfBytes_two); 
+            //download(pdfBytes, "pdf-lib_creation_example.pdf", "application/pdf");
+        }
+        catch(e)
+        {
+            console.log("Error happens in second box and it says: ", e)
+        } */
+        
+    };
     
     useEffect(() => {
         //console.log(pagesSelected.filter(page => !previousPages.current.includes(page)));
@@ -212,7 +288,7 @@ function CollectionContainer({ pagesSelected, removePage, resetPagesSelected, up
                                     <img alt="back" title="Back to Full List" width="33px" src="images/back.png" id="backButton" />
                                 </div>
                             </div>
-                            <SortableList items={pagesSelected} onSortEnd={onSortEnd} axis='xy' pressDelay={100} removePage={removePage} getDraggableKey={getDraggableKey} />
+                            <SortableList items={pagesSelected} onSortEnd={onSortEnd} axis='xy' pressDelay={50} removePage={removePage} getDraggableKey={getDraggableKey} />
                         </>:
                         <>
                             <div id="package-navbar">

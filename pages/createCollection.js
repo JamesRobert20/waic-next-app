@@ -387,7 +387,7 @@ function FileAndCollectionViewer() {
                         </div>
                         <InsertIntoCollectionButtons submitPages={submitPages} submitMorePages={submitMorePages} insertToCollectionBtn={insertToCollectionBtn} />
                     </div>
-                    <CollectionContainer 
+                    <CollectionContainer fileData={fileData}
                         pagesSelected={pagesSelected} removePage={removePage} pagesAdded={pagesAdded.current} resetPagesSelected={resetPagesSelected} 
                         changePagesSelected={changePagesSelected} updateInsertToCollectionBtn={updateInsertToCollectionBtn}  resetPagesAdded={resetPagesAdded}
                     />

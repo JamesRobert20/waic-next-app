@@ -220,7 +220,7 @@ function WorkspaceViewer({ numOfWorkspaces, file, workspaceNum, collectionFiles,
                 </>: <></>
             }
             </div> 
-            <SortableList axis='xy' pressDelay={100}
+            <SortableList axis='xy' pressDelay={50}
                 getDraggableKey={getDraggableKey} removeCollectionPage={removeCollectionPage} onSortEnd={onSortEnd}
                 pageSize={numOfWorkspaces === 1 ? "single-view" : numOfWorkspaces === 2 ? "two-view" : "three-view"}
                 containerClassname={
