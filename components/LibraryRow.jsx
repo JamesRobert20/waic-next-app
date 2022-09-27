@@ -2,8 +2,9 @@ import CollectionFolder from "./CollectionFolder"
 import FileObjectViewer from "./FileObjectViewer"
 import { useState, useEffect } from 'react'
 
-function LibraryRow({ item, styles }) {
-    const yourCollections = ["Geology", "Sex Education", "Calculus", "English", "Law and Pursuit"];
+function LibraryRow({ userCollections, item, styles }) {
+    //console.log(userCollections);
+    const yourCollections = userCollections? userCollections : [];
     const [flexibleCollectionList, setFlexibleCollectionList] = useState([]);
 
     const debounce = (fn, ms)  => {
@@ -18,6 +19,7 @@ function LibraryRow({ item, styles }) {
     }
 
     useEffect(() => {
+        console.log("changed to  ", userCollections);
         const debouncedHandleResize = debounce( () => {
             //console.log("new dimensions are ", window.innerWidth, " x ", window.innerHeight);
             //console.log("There should be ", Math.floor((window.innerWidth+40)/300), " folders");
@@ -47,21 +49,21 @@ function LibraryRow({ item, styles }) {
         return _ => {
           window && window.removeEventListener('resize', debouncedHandleResize)
         }
-    })
+    }, [userCollections])
 
     return (
         <div className={styles.libraryRowContainer}>
             <h2 className={styles.homeHeadings}>{item}</h2>
             <div className={item === "Your Collections" ? styles.libraryRow+" "+styles.hiddenOverflow : styles.libraryRow}>
                 { item === "Suggested" ? 
-                    ["percyjack.pdf", "WAIC.pdf", "potter.pdf"].map( (file, index) => (
+                    ["percyjack.pdf", "tucomanca.pdf", "potter.pdf", "fake slides.pdf"].map( (file, index) => (
                         <FileObjectViewer styles={styles} file={file} key={index} />
                     ))
                     : item === "Your Collections" ?
                     flexibleCollectionList.map( (folder, index) => (
                         <CollectionFolder styles={styles} folderName={folder} key={index} />
                     ))
-                    : ["fake slides.pdf", "tucomanca.pdf", "Tutorial10.pdf"].map( (file, index) => (
+                    : ["fake slides.pdf", "tucomanca.pdf", "Tutorial10.pdf", "potter.pdf"].map( (file, index) => (
                         <FileObjectViewer styles={styles} file={file} key={index} />
                     ))
                 }

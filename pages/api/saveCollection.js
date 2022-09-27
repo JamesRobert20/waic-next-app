@@ -53,7 +53,7 @@ export default async function handler(req, res) {
         {
             console.log('connection made')
             db.collection('UserCollections')
-                .insertOne({ user: "", collection_name, collection_files })
+                .insertOne({ user, collection_name, collection_files })
                 .then(result => console.log(result))
                 .catch(err => console.log(err))
         }

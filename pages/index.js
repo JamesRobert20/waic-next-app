@@ -6,7 +6,7 @@ import TopNavbar from "../components/TopNavbar"
 import { useContext } from 'react'
 import UserAuthenticationContext from '../User/userAuthenticator'
 
-export default function Home() {
+export default function Home({ userCollections }) {
     /* import FlexibleDocViewer from "../components/FlexibleDocViewer"
 
     function docViewTest() {
@@ -28,7 +28,13 @@ export default function Home() {
     export default docViewTest */
     const { user } = useContext(UserAuthenticationContext);
 
-    console.log("preventing prop drilling got: ", user);
+    //console.log("preventing prop drilling got: ", user);
+    let collections = [];
+    if(user)
+    {
+        collections = userCollections.filter(collection => collection.user === user.email);
+        console.log("collections from db are: ", collections);
+    }
 
     if(user)
         return (
@@ -39,7 +45,7 @@ export default function Home() {
                         <h1 className={styles.homeHeadings}>{"Welcome back, "+user.user_metadata.full_name.split(' ')[0]}</h1>
                         <div className={styles.libraryContainer}>
                             {["Suggested","Your Collections","Your files"].map((elem, index) => (
-                                <LibraryRow styles={styles} key={index} item={elem} />
+                                <LibraryRow userCollections={collections} styles={styles} key={index} item={elem} />
                             ))}
                         </div>
                     </div>
@@ -60,4 +66,13 @@ export default function Home() {
         </div>
         </>
     )
+}
+
+export async function getServerSideProps() {
+    const userCollections = await (await fetch('http://localhost:3000/api/getCollections')).json();
+    return {
+        props: {
+            userCollections
+        }
+    }
 }
