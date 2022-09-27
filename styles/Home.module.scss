@@ -135,7 +135,7 @@
 
 .landingContainer {
     height: 100%;
-    background-color: azure;
+    background-color: white !important;
 }
 .landingHeading {
     font-size: 3em !important;
@@ -144,12 +144,13 @@
 .homeContainer
 {
     min-width: 870px;
-    background-color: azure;
+    background-color: white;
+    margin-top: 100px;
 }
 .homeHeadings
 {
     text-align: left !important;
-    color: grey !important;
+    color: lightcoral !important;
 }
 .libraryAndHeading
 {
@@ -168,7 +169,7 @@
 }
 .libraryRow
 {
-    background-color: rgba(211, 211, 211, 0.534);
+    background-color: white;
     width: 100%;
     height: 275px;
     border: 1px solid rgb(212, 189, 147);

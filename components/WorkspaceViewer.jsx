@@ -150,6 +150,24 @@ function WorkspaceViewer({ numOfWorkspaces, file, workspaceNum, collectionFiles,
         setUndoObject({});
     };
 
+    const updateExportType = value => {
+        if(!saveActive)
+            setSaveActive(!saveActive);
+        
+        if(fileToDisplay.name)
+            setFileToDisplay({...fileToDisplay, exportAs: value })
+    }
+
+    const getExportType = () =>
+    {
+        if(fileToDisplay.pages.every(page => {
+            let splitted = page.filename.toLowerCase().split('.')
+            let fileExtension = splitted[splitted.length - 1]
+            return !fileExtension.toLowerCase().includes('mp4') && !fileExtension.toLowerCase().includes('jpg') && !fileExtension.toLowerCase().includes('png')
+        }))
+            return "any";
+        return "powerpoint";        
+    }
     const updateFileToDisplay = selectedOption => {
 
         setUndoObject({ active: false, from: "", previousOrder: [], page: [], index: null });
@@ -244,10 +262,17 @@ function WorkspaceViewer({ numOfWorkspaces, file, workspaceNum, collectionFiles,
                 </div>
                 <div className={numOfWorkspaces === 3 ? "bottom-select-container-three" : "bottom-select-container"}>
                     <label htmlFor={"deck-to-export-"+workspaceNum} className='bottom-select-labels'>Export as: </label>
-                    <select id={"deck-to-export-"+workspaceNum} className="collectionContainerBtns"> 
-                        <option></option>
-                        <option>Pdf(.pdf)</option>
-                        <option>Powerpoint(.pptx)</option>
+                    <select onChange={e => updateExportType(e?.target?.value)} id={"deck-to-export-"+workspaceNum} className="collectionContainerBtns">
+                        {
+                            fileToDisplay.name ?
+                            getExportType() === "any" ?
+                            <>
+                                <option>Pdf(.pdf)</option>
+                                <option>Powerpoint(.pptx)</option>
+                            </>
+                            :<option>Powerpoint(.pptx)</option>
+                            :<option></option>
+                        } 
                     </select>
                 </div>
             </div>

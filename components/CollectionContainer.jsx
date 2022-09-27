@@ -1,8 +1,10 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useContext } from 'react'
 import CollectionPage from './CollectionPage';
 import WorkspaceViewer from './WorkspaceViewer';
 import HeadingComponent from './HeadingComponent'
 import { GiCancel } from 'react-icons/gi'
+import UserAuthenticationContext from '../User/userAuthenticator'
+import pptxgen from 'pptxgenjs'
 //import dynamic from 'next/dynamic';
 //import { PDFDocument } from 'pdf-lib'
 
@@ -54,8 +56,9 @@ function CollectionContainer({ fileData, pagesSelected, removePage, resetPagesSe
     const [viewMode, setViewMode] = useState("Full list");
     const [undoItems, setUndoItems] = useState({ active: false, item: null, index: null });
     const [collectionHeading, setCollectionHeading] = useState("My New Collection");
+    const { user } = useContext(UserAuthenticationContext);
+
     const fileClicked = useRef({});
-    
     const draggableKeys = useRef([]);
 
     const getKey = () => {
@@ -82,9 +85,11 @@ function CollectionContainer({ fileData, pagesSelected, removePage, resetPagesSe
         setCollectionHeading(newHeading);
     };
 
-    async function downloadCollection()
+    async function downloadCollection(mode)
     {
-        try{
+        try
+        {
+            
             //let urL = fileData["percyjack.pdf"].fileUrl;
             //console.log("the file url given was: ", urL);
 
@@ -103,16 +108,83 @@ function CollectionContainer({ fileData, pagesSelected, removePage, resetPagesSe
                 name: file.name, 
                 index: file.index, 
                 pages: file.pages.map(page => ({ fileFrom: page.filename, pageNumber: page.pageNumber })),
-                exportAs: "pdf"
+                exportAs: file.exportAs ? file.exportAs : file.pages.every(page => {
+                    let splitted = page.filename.toLowerCase().split('.')
+                    let fileExtension = splitted[splitted.length - 1]
+                    return !fileExtension.toLowerCase().includes('mp4') && !fileExtension.toLowerCase().includes('jpg') && !fileExtension.toLowerCase().includes('png')
+                }) ? "pdf" : "Powerpoint(.pptx)"
             }));
-            const response = await (await fetch('/api/downloadCollection', {
-                method: 'POST',
-                body: JSON.stringify({ collectionName: collectionHeading, collection_files: remadeFiles }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })).json();
+
+            let response;
+            if(mode === "download")
+            {
+                response = await (await fetch('/api/downloadCollection', {
+                    method: 'POST',
+                    body: JSON.stringify({ collectionName: collectionHeading, collection_files: remadeFiles }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })).json();
+            }
+            else
+            {
+                response = await (await fetch('/api/saveCollection', {
+                    method: 'POST',
+                    body: JSON.stringify({ user: user.email, collectionName: collectionHeading, collection_files: remadeFiles }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })).json();
+            }
             console.log("response returned is ", response);
+            
+            remadeFiles.forEach( (file) =>
+            {
+                if(file.exportAs === "Powerpoint(.pptx)")
+                {
+                    let exportPresentation = new pptxgen();
+                    
+                    file.pages.forEach( (page, pageIndex) => 
+                    { 
+                        var theSlide = exportPresentation.addSlide();
+
+                        //console.log(page);
+                        //console.log(collectionFiles[file.index].pages[pageIndex]);
+                        // If current page is a video, get cover page of video, from the invisible canvas
+                        let mediaPath = collectionFiles[file.index].pages[pageIndex].data;
+                        if(typeof page.pageNumber === 'string' && page.pageNumber.toLowerCase().includes('mp4'))
+                        {
+                            theSlide.addMedia({ type: "video", path: "http://localhost:3000/files/"+page.pageNumber, x: '25%', y: '2.5%', w: '50%', h: '90%'});
+                        }
+                        else
+                        {
+                            theSlide.addImage({ path: mediaPath, x: '25%', y: '2.5%', w: '50%', h: '96%'})
+                        }
+                    });
+
+                    var exportData = {
+                        file_name: file.name,
+                        collection_name: collectionHeading
+                    };
+                    
+                    exportPresentation.writeFile({  fileName:  file.name }).then(() => {
+                        // This is a temporary solution for a minimum viable product
+                        // When the file is done downloading, send a request to the server to copy it to the collection directory
+                        console.log("Done exporting powerpoint file...");
+
+                        setTimeout(async function copyPowerpoint() {                                
+                            const res = await (await fetch('/api/createPowerpoint', {
+                                method: 'POST',
+                                body: JSON.stringify(exportData),
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                }
+                            })).json();
+                        }, 500);
+                    });
+                }
+            });
+
             alert(response);
         }
         catch(e)
@@ -358,8 +430,8 @@ function CollectionContainer({ fileData, pagesSelected, removePage, resetPagesSe
                     }
                 </div>
                 <div>
-                    <button onClick={() => downloadCollection()} id="download-collection" className="collection-post-btns">Download</button>
-                    <button id="save-collection" className="collection-post-btns">Save</button>
+                    <button onClick={collectionFiles.length === 0 ? () => console.log(user) :() => downloadCollection("download")} id="download-collection" className="collection-post-btns">Download</button>
+                    <button onClick={collectionFiles.length === 0 || !user ? () => {} :() => downloadCollection("save")} id="save-collection" className={user ? "collection-post-btns": "collection-post-btns inactive"}>Save</button>
                 </div> 
             </div>
             <div style={{display: "none"}}>
